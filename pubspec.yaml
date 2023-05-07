@@ -66,6 +66,11 @@ flutter:
     - assets/images/penyakit-2.png
     - assets/images/penyakit-3.png
     - assets/images/penyakit-4.png
+    - assets/images/blog-0.jpg
+    - assets/images/blog-1.jpg
+    - assets/images/blog-2.jpg
+    - assets/images/blog-3.jpg
+    - assets/images/blog-4.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

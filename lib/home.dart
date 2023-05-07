@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/riwayat_item.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/blog_item.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/data/riwayat.dart';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/data/blogs.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
 
   final List<Map<String, String>> _list = Riwayat().list;
+  final List<Map<String, String>> _blogs = Blogs().list;
 
   @override
   Widget build(BuildContext context) {
@@ -111,51 +114,13 @@ class Home extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            SizedBox(
-              height: 140,
-              child: ListView(
-                children: [
-                  Card(
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Image.asset('assets/images/penyakit-1.png'),
-                          ),
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 80,
-                                  child: Text(
-                                    'What is lorem ipsum?',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Quicksand',
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    Text('4 mei'),
-                                    Text('M. Bagas Setia'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) => BlogItem(
+                  blog: _blogs[index],
+                ),
+                separatorBuilder: (context, index) => const SizedBox(height: 5),
+                itemCount: _blogs.length,
               ),
             ),
           ],
