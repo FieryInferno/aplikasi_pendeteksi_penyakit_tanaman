@@ -47,31 +47,68 @@ class Home extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Card(
-                  color: const Color(0xFFCCDDD3),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 25,
-                    ),
-                    child: Row(
-                      children: [
-                        const Flexible(
-                          child: Text(
-                            'Cari tahu penyakit tanaman kamu disini',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              fontFamily: 'Quicksand',
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: 125,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.photo_camera),
+                                      SizedBox(width: 5),
+                                      Text('Ambil Foto'),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.image),
+                                      SizedBox(width: 5),
+                                      Text('Galeri'),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                        Image.asset('assets/images/scan.png'),
-                      ],
+                        );
+                      },
+                    );
+                  },
+                  child: Card(
+                    color: const Color(0xFFCCDDD3),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 20,
+                        horizontal: 25,
+                      ),
+                      child: Row(
+                        children: [
+                          const Flexible(
+                            child: Text(
+                              'Cari tahu penyakit tanaman kamu disini',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                                fontFamily: 'Quicksand',
+                              ),
+                            ),
+                          ),
+                          Image.asset('assets/images/scan.png'),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -141,9 +178,9 @@ class Home extends StatelessWidget {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5), // Warna bayangan
-                    spreadRadius: 2, // Penyebaran bayangan
-                    blurRadius: 5, // Ukuran bayangan
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
                     offset: const Offset(0, 3),
                   ),
                 ],
