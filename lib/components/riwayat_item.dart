@@ -10,11 +10,10 @@ class RiwayatItem extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: 140,
+          width: 150,
           child: Image.asset(
             'assets/images/${riwayat['image']}',
             fit: BoxFit.cover,
-            width: 140,
             height: 140,
           ),
         ),

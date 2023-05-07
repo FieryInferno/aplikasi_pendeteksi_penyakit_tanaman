@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/riwayat_item.dart';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/data/riwayat.dart';
 
 class Home extends StatelessWidget {
@@ -17,6 +18,7 @@ class Home extends StatelessWidget {
           horizontal: 20,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -74,13 +76,8 @@ class Home extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Riwayat',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'Quicksand',
-                    fontWeight: FontWeight.w600,
-                  ),
+                const TitleWidget(
+                  title: 'Riwayat',
                 ),
                 TextButton(
                   child: const Text(
@@ -97,79 +94,68 @@ class Home extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            // Expanded(
-            //   child: ListView(
-            //     scrollDirection: Axis.horizontal,
-            //     children: [
-            //       Column(
-            //         children: [
-            //           SizedBox(
-            //             width: 140,
-            //             child: Expanded(
-            //               child: Image.asset(
-            //                 'assets/images/penyakit-1.png',
-            //                 fit: BoxFit.cover,
-            //               ),
-            //             ),
-            //           ),
-            //           Container(
-            //             decoration: const BoxDecoration(
-            //               color: Colors.white,
-            //               borderRadius: BorderRadius.only(
-            //                 bottomLeft: Radius.circular(10),
-            //                 bottomRight: Radius.circular(10),
-            //               ),
-            //             ),
-            //             child: Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 Container(
-            //                   decoration: const BoxDecoration(
-            //                     image: DecorationImage(
-            //                       image: AssetImage(
-            //                           'assets/images/penyakit-1.png'),
-            //                       fit: BoxFit.cover,
-            //                     ),
-            //                   ),
-            //                 ),
-            //                 Padding(
-            //                   padding: const EdgeInsets.all(10),
-            //                   child: Column(
-            //                     children: const [
-            //                       Text(
-            //                         'Penyakit 1',
-            //                         style: TextStyle(
-            //                           fontFamily: 'Quicksand',
-            //                           fontWeight: FontWeight.bold,
-            //                         ),
-            //                       ),
-            //                       Text('4 Maret 2023 09:00'),
-            //                     ],
-            //                   ),
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            Expanded(
+            SizedBox(
+              height: 200,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return RiwayatItem(riwayat: _list[index]);
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    width: 5,
-                  );
-                },
+                itemBuilder: (context, index) =>
+                    RiwayatItem(riwayat: _list[index]),
+                separatorBuilder: (context, index) => const SizedBox(width: 5),
                 itemCount: _list.length,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const TitleWidget(title: 'Blog'),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 140,
+              child: ListView(
+                children: [
+                  Card(
+                    elevation: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Image.asset('assets/images/penyakit-1.png'),
+                          ),
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 80,
+                                  child: Text(
+                                    'What is lorem ipsum?',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Quicksand',
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    Text('4 mei'),
+                                    Text('M. Bagas Setia'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
