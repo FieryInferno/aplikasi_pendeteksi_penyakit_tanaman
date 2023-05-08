@@ -17,6 +17,10 @@ class Home extends StatelessWidget {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
   }
 
+  Future getImageByGaleri() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,12 +81,15 @@ class Home extends StatelessWidget {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.image),
-                                      SizedBox(width: 5),
-                                      Text('Galeri'),
-                                    ],
+                                  child: GestureDetector(
+                                    onTap: () => getImageByGaleri(),
+                                    child: Row(
+                                      children: const [
+                                        Icon(Icons.image),
+                                        SizedBox(width: 5),
+                                        Text('Galeri'),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
