@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/riwayat_item.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/blog_item.dart';
@@ -6,10 +7,15 @@ import 'package:aplikasi_pendeteksi_penyakit_tanaman/data/riwayat.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/data/blogs.dart';
 
 class Home extends StatelessWidget {
-  Home({super.key});
-
   final List<Map<String, String>> _list = Riwayat().list;
   final List<Map<String, String>> _blogs = Blogs().list;
+  final picker = ImagePicker();
+
+  Home({super.key});
+
+  Future getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +65,15 @@ class Home extends StatelessWidget {
                             child: Column(
                               children: [
                                 Expanded(
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.photo_camera),
-                                      SizedBox(width: 5),
-                                      Text('Ambil Foto'),
-                                    ],
+                                  child: GestureDetector(
+                                    onTap: () => getImage(),
+                                    child: Row(
+                                      children: const [
+                                        Icon(Icons.photo_camera),
+                                        SizedBox(width: 5),
+                                        Text('Ambil Foto'),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Expanded(
