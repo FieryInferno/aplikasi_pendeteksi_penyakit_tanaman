@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/preview_widget.dart';
-import 'dart:io';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/riwayat_item.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/blog_item.dart';
@@ -14,21 +13,6 @@ class Home extends StatelessWidget {
   final picker = ImagePicker();
 
   Home({super.key});
-
-  Future getImage(context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PreviewWidget(File(pickedFile!.path)),
-      ),
-    );
-  }
-
-  Future getImageByGaleri() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +63,7 @@ class Home extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: GestureDetector(
-                                    onTap: () => getImage(context),
+                                    onTap: () => Helpers().getImage(context),
                                     child: Row(
                                       children: const [
                                         Icon(Icons.photo_camera),
@@ -91,7 +75,7 @@ class Home extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: GestureDetector(
-                                    onTap: () => getImageByGaleri(),
+                                    onTap: () => Helpers().getImageByGaleri(),
                                     child: Row(
                                       children: const [
                                         Icon(Icons.image),

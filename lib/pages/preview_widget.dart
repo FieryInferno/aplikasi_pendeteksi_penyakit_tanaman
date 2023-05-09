@@ -1,3 +1,4 @@
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/primary_button.dart';
 import 'dart:io';
@@ -65,13 +66,16 @@ class _PreviewWidget extends State<PreviewWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.min,
               children: [
-                InkWell(
+                PrimaryButton(
+                  'Unggah Gambar',
                   onTap: () => setState(() {
                     _loading = true;
                   }),
-                  child: const PrimaryButton('Unggah Gambar'),
                 ),
-                const PrimaryButton('Ambil Ulang'),
+                PrimaryButton(
+                  'Ambil Ulang',
+                  onTap: () => Helpers().getImage(context),
+                ),
               ],
             ),
           ),
