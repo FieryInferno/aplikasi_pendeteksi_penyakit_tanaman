@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/preview_widget.dart';
+import 'dart:io';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/riwayat_item.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/blog_item.dart';
@@ -20,7 +21,7 @@ class Home extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PreviewWidget(),
+        builder: (context) => PreviewWidget(File(pickedFile!.path)),
       ),
     );
   }

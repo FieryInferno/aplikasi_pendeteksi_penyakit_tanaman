@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/primary_button.dart';
+import 'dart:io';
 
 class PreviewWidget extends StatelessWidget {
-  const PreviewWidget({super.key});
+  final File? image;
+
+  const PreviewWidget(this.image, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +18,8 @@ class PreviewWidget extends StatelessWidget {
               top: 0,
               right: 0,
               left: 0,
-              child: Image.asset(
-                'assets/images/blog-1.jpg',
+              child: Image.file(
+                image!,
                 fit: BoxFit.cover,
               ),
             ),
