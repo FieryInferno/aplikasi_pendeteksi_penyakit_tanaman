@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/preview_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/riwayat_item.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/blog_item.dart';
@@ -13,8 +14,15 @@ class Home extends StatelessWidget {
 
   Home({super.key});
 
-  Future getImage() async {
+  Future getImage(context) async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PreviewWidget(),
+      ),
+    );
   }
 
   Future getImageByGaleri() async {
@@ -70,7 +78,7 @@ class Home extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: GestureDetector(
-                                    onTap: () => getImage(),
+                                    onTap: () => getImage(context),
                                     child: Row(
                                       children: const [
                                         Icon(Icons.photo_camera),
