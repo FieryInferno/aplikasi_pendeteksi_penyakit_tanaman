@@ -21,6 +21,22 @@ class PreviewWidget extends StatelessWidget {
               ),
             ),
             Positioned(
+              top: 10,
+              left: 10,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: const Icon(
+                  Icons.arrow_back,
+                  color: Color(0xFF116531),
+                ),
+              ),
+            ),
+            Positioned(
               bottom: 0,
               right: 0,
               left: 0,

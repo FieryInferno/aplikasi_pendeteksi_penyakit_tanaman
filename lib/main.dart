@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/home.dart';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/preview_widget.dart';
 
 void main() => runApp(const MyApp());
 
