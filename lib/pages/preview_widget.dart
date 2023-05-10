@@ -1,9 +1,11 @@
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/back_button.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/primary_button.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/result.dart';
 
 class PreviewWidget extends StatefulWidget {
   final File? image;
@@ -30,22 +32,7 @@ class _PreviewWidget extends State<PreviewWidget> {
           fit: BoxFit.cover,
         ),
       ),
-      Positioned(
-        top: 10,
-        left: 10,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          onPressed: () => Navigator.pop(context),
-          child: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF116531),
-          ),
-        ),
-      ),
+      const Positioned(top: 10, left: 10, child: BackButtonWidget()),
       Positioned(
         bottom: 0,
         right: 0,
@@ -68,9 +55,7 @@ class _PreviewWidget extends State<PreviewWidget> {
               children: [
                 PrimaryButton(
                   'Unggah Gambar',
-                  onTap: () => setState(() {
-                    _loading = true;
-                  }),
+                  onTap: () => setState(() => _loading = true),
                 ),
                 PrimaryButton(
                   'Ambil Ulang',
@@ -84,46 +69,59 @@ class _PreviewWidget extends State<PreviewWidget> {
     ];
 
     if (_loading) {
-      listWidget.addAll([
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.1),
-            ),
-          ),
-        ),
-        Center(
-          child: SizedBox(
-            height: 160,
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: Column(
-                children: const [
-                  CupertinoActivityIndicator(
-                    color: Color(0xFF116531),
-                    radius: 40,
+      listWidget.add(
+        FutureBuilder(
+          future: Future.delayed(const Duration(seconds: 5)),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Stack(
+                children: [
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.1),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 15),
-                  Text(
-                    'Sedang Diproses',
-                    style: TextStyle(
-                      fontFamily: 'Quicksand',
-                      fontSize: 16,
-                      color: Color(0xFF116531),
-                      fontWeight: FontWeight.bold,
+                  Center(
+                    child: SizedBox(
+                      height: 160,
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: const [
+                            CupertinoActivityIndicator(
+                              color: Color(0xFF116531),
+                              radius: 40,
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                              'Sedang Diproses',
+                              style: TextStyle(
+                                fontFamily: 'Quicksand',
+                                fontSize: 16,
+                                color: Color(0xFF116531),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
+              );
+            } else {
+              return const Result();
+            }
+          },
         ),
-      ]);
+      );
     }
 
     return Scaffold(

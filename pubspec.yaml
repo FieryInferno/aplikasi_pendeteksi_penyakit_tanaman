@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.7+4
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,9 @@ flutter:
     - assets/images/penyakit-2.png
     - assets/images/penyakit-3.png
     - assets/images/penyakit-4.png
+    - assets/images/produk-1.png
+    - assets/images/produk-2.png
+    - assets/images/produk-3.png
     - assets/images/blog-0.jpg
     - assets/images/blog-1.jpg
     - assets/images/blog-2.jpg
