@@ -33,7 +33,7 @@ class _Result extends State<Result> {
               right: 0,
               left: 0,
               child: Image.asset(
-                  'assets/images/${widget.riwayat!['image'] ?? 'blog-1.jpg'}',
+                  'assets/images/${widget.riwayat != null ? widget.riwayat!['image'] : 'blog-1.jpg'}',
                   fit: BoxFit.cover),
             ),
             const Positioned(top: 10, left: 10, child: BackButtonWidget()),
@@ -63,15 +63,21 @@ class _Result extends State<Result> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleWidget(
-                            title: widget.riwayat!['nama_penyakit'] ??
-                                'Nama Penyakit',
+                            title: (widget.riwayat != null
+                                    ? widget.riwayat!['nama_penyakit']
+                                    : 'Nama Penyakit')
+                                .toString(),
                           ),
                           Row(
                             children: [
                               const Icon(Icons.schedule),
                               const SizedBox(width: 5),
-                              TextWidget(widget.riwayat!['tanggal'] ??
-                                  '4 Mei 2023, 09:00'),
+                              TextWidget(
+                                (widget.riwayat != null
+                                        ? widget.riwayat!['tanggal']
+                                        : '4 Mei 2023, 09:00')
+                                    .toString(),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 10),
