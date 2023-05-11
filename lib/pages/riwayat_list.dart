@@ -1,9 +1,11 @@
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
 import 'package:flutter/material.dart';
-import '/components/text_widget.dart';
+import '/components/riwayat_list_item.dart';
+import '/data/riwayat.dart';
 
 class RiwayatList extends StatelessWidget {
-  const RiwayatList({super.key});
+  final List<Map<String, String>> _riwayatList = Riwayat().list;
+  RiwayatList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,56 +35,12 @@ class RiwayatList extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              ListView(
+              ListView.separated(
                 shrinkWrap: true,
-                children: [
-                  Card(
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
-                              child: Image.asset(
-                                'assets/images/penyakit-1.png',
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 80,
-                                  child: TextWidget(
-                                    'Penyakit 1',
-                                    weight: FontWeight.bold,
-                                    size: 15,
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    Text('{blog[date]}'),
-                                    Text('{blog[author]}'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                itemBuilder: (context, index) =>
+                    RiwayatListItem(data: _riwayatList[index]),
+                separatorBuilder: (context, index) => const SizedBox(height: 5),
+                itemCount: _riwayatList.length,
               ),
             ],
           ),
