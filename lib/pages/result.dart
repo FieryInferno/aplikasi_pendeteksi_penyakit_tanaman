@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/data/rekomendasi_produk.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/back_button.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/text_widget.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/rekomendasi_produk_item.dart';
+import '/data/rekomendasi_produk.dart';
+import '/components/back_button.dart';
+import '/components/title_widget.dart';
+import '/components/text_widget.dart';
+import '/components/rekomendasi_produk_item.dart';
 
 class Result extends StatefulWidget {
-  const Result({super.key});
+  final Map<String, String>? riwayat;
+
+  const Result({super.key, this.riwayat});
 
   @override
   _Result createState() => _Result();
@@ -30,7 +32,9 @@ class _Result extends State<Result> {
               top: 0,
               right: 0,
               left: 0,
-              child: Image.asset('assets/images/blog-1.jpg', fit: BoxFit.cover),
+              child: Image.asset(
+                  'assets/images/${widget.riwayat!['image'] ?? 'blog-1.jpg'}',
+                  fit: BoxFit.cover),
             ),
             const Positioned(top: 10, left: 10, child: BackButtonWidget()),
             AnimatedPositioned(
@@ -58,12 +62,16 @@ class _Result extends State<Result> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const TitleWidget(title: 'Nama Penyakit'),
+                          TitleWidget(
+                            title: widget.riwayat!['nama_penyakit'] ??
+                                'Nama Penyakit',
+                          ),
                           Row(
-                            children: const [
-                              Icon(Icons.schedule),
-                              SizedBox(width: 5),
-                              TextWidget('4 Mei 2023, 09:00'),
+                            children: [
+                              const Icon(Icons.schedule),
+                              const SizedBox(width: 5),
+                              TextWidget(widget.riwayat!['tanggal'] ??
+                                  '4 Mei 2023, 09:00'),
                             ],
                           ),
                           const SizedBox(height: 10),

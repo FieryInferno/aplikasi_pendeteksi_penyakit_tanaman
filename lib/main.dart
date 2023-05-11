@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/home.dart';
+import '/home.dart';
+import '/pages/riwayat_list.dart';
 
 void main() => runApp(const MyApp());
 
@@ -16,9 +17,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: SafeArea(
-        child: Home(),
-      ),
+      home: SafeArea(child: Home()),
     );
   }
 }
