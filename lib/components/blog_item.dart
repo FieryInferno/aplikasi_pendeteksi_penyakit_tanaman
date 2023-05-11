@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/components/text_widget.dart';
 
 class BlogItem extends StatelessWidget {
   final Map<String, String> blog;
@@ -31,13 +32,10 @@ class BlogItem extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: 80,
-                    child: Text(
+                    child: TextWidget(
                       '${blog['title']}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Quicksand',
-                        fontSize: 15,
-                      ),
+                      weight: FontWeight.bold,
+                      size: 15,
                     ),
                   ),
                   Row(

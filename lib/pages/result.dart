@@ -40,11 +40,7 @@ class _Result extends State<Result> {
               left: 0,
               top: _displayFull ? 80 : screenHeight / 2,
               child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _displayFull = !_displayFull;
-                  });
-                },
+                onTap: () => setState(() => _displayFull = !_displayFull),
                 child: Container(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(

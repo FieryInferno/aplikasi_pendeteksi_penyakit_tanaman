@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/riwayat_item.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/title_widget.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/blog_item.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/data/riwayat.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/data/blogs.dart';
+import '/helpers.dart';
+import '/pages/riwayat_list.dart';
+import '/components/riwayat_item.dart';
+import '/components/title_widget.dart';
+import '/components/blog_item.dart';
+import '/data/riwayat.dart';
+import '/data/blogs.dart';
+import '/components/text_widget.dart';
 
 class Home extends StatelessWidget {
   final List<Map<String, String>> _list = Riwayat().list;
@@ -37,13 +39,10 @@ class Home extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    const Text(
+                    const TextWidget(
                       'Daun Daunan',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                        fontFamily: 'Quicksand',
-                      ),
+                      weight: FontWeight.bold,
+                      size: 24,
                     ),
                   ],
                 ),
@@ -138,7 +137,12 @@ class Home extends StatelessWidget {
                           fontFamily: 'Quicksand',
                         ),
                       ),
-                      onPressed: () => print('Lihat semua'),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RiwayatList()));
+                      },
                     ),
                   ],
                 ),
