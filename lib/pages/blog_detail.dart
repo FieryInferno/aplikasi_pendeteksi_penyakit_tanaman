@@ -4,9 +4,9 @@ import '/components/title_widget.dart';
 import '/components/text_widget.dart';
 
 class BlogDetail extends StatefulWidget {
-  final Map<String, String>? blogData;
+  final Map<String, String> blogData;
 
-  const BlogDetail({super.key, this.blogData});
+  const BlogDetail(this.blogData, {super.key});
 
   @override
   _BlogDetail createState() => _BlogDetail();
@@ -28,8 +28,7 @@ class _BlogDetail extends State<BlogDetail> {
               top: 0,
               right: 0,
               left: 0,
-              child: Image.asset(
-                  'assets/images/${widget.blogData != null ? widget.blogData!['image'] : 'blog-1.jpg'}',
+              child: Image.asset('assets/images/${widget.blogData['image']}',
                   fit: BoxFit.cover),
             ),
             const Positioned(top: 10, left: 10, child: BackButtonWidget()),
@@ -58,15 +57,15 @@ class _BlogDetail extends State<BlogDetail> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const TitleWidget(title: 'Judul Artikel'),
+                          TitleWidget(title: widget.blogData['title']!),
                           Row(
-                            children: const [
-                              Icon(Icons.schedule),
-                              SizedBox(width: 5),
-                              TextWidget('4 Mei 2023, 09:00'),
-                              SizedBox(width: 5),
-                              Icon(Icons.person),
-                              TextWidget('M. Bagas Setia'),
+                            children: [
+                              const Icon(Icons.schedule),
+                              const SizedBox(width: 5),
+                              TextWidget(widget.blogData['date']!),
+                              const SizedBox(width: 5),
+                              const Icon(Icons.person),
+                              TextWidget(widget.blogData['author']!),
                             ],
                           ),
                           const SizedBox(height: 10),

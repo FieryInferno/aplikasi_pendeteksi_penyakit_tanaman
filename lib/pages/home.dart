@@ -165,7 +165,7 @@ class Home extends StatelessWidget {
                 Expanded(
                   child: ListView.separated(
                     itemBuilder: (context, index) => ClickWidget(
-                      destination: const BlogDetail(),
+                      destination: BlogDetail(_blogs[index]),
                       child: BlogItem(blog: _blogs[index]),
                     ),
                     separatorBuilder: (context, index) =>
