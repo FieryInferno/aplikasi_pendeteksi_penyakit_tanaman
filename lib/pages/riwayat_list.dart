@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/components/riwayat_list_item.dart';
 import '/components/title_widget.dart';
+import '/components/click_widget.dart';
 import '/data/riwayat.dart';
 import '/pages/result.dart';
 
@@ -38,14 +39,9 @@ class RiwayatList extends StatelessWidget {
               const SizedBox(height: 10),
               ListView.separated(
                 shrinkWrap: true,
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Result(
-                        riwayat: _riwayatList[index],
-                      ),
-                    ),
+                itemBuilder: (context, index) => ClickWidget(
+                  destination: Result(
+                    riwayat: _riwayatList[index],
                   ),
                   child: RiwayatListItem(data: _riwayatList[index]),
                 ),

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '/helpers.dart';
 import '/pages/riwayat_list.dart';
+import '/pages/result.dart';
 import '/components/riwayat_item.dart';
 import '/components/title_widget.dart';
 import '/components/blog_item.dart';
+import '/components/text_widget.dart';
+import '/components/click_widget.dart';
 import '/data/riwayat.dart';
 import '/data/blogs.dart';
-import '/components/text_widget.dart';
 
 class Home extends StatelessWidget {
   final List<Map<String, String>> _list = Riwayat().list;
@@ -153,8 +155,10 @@ class Home extends StatelessWidget {
                   height: 200,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) =>
-                        RiwayatItem(riwayat: _list[index]),
+                    itemBuilder: (context, index) => ClickWidget(
+                      destination: Result(riwayat: _list[index]),
+                      child: RiwayatItem(riwayat: _list[index]),
+                    ),
                     separatorBuilder: (context, index) =>
                         const SizedBox(width: 5),
                     itemCount: _list.length,
