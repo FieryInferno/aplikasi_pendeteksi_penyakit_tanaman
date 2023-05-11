@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import '/helpers.dart';
 import '/pages/riwayat_list.dart';
 import '/pages/result.dart';
+import '/pages/blog_detail.dart';
 import '/components/riwayat_item.dart';
 import '/components/title_widget.dart';
 import '/components/blog_item.dart';
@@ -48,9 +49,7 @@ class Home extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
@@ -122,9 +121,7 @@ class Home extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -148,9 +145,7 @@ class Home extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 200,
                   child: ListView.separated(
@@ -164,17 +159,14 @@ class Home extends StatelessWidget {
                     itemCount: _list.length,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 const TitleWidget(title: 'Blog'),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Expanded(
                   child: ListView.separated(
-                    itemBuilder: (context, index) => BlogItem(
-                      blog: _blogs[index],
+                    itemBuilder: (context, index) => ClickWidget(
+                      destination: const BlogDetail(),
+                      child: BlogItem(blog: _blogs[index]),
                     ),
                     separatorBuilder: (context, index) =>
                         const SizedBox(height: 5),
