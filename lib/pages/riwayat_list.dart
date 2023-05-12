@@ -7,6 +7,7 @@ import '/pages/result.dart';
 
 class RiwayatList extends StatelessWidget {
   final List<Map<String, String>> _riwayatList = Riwayat().list;
+
   RiwayatList({super.key});
 
   @override
@@ -16,7 +17,7 @@ class RiwayatList extends StatelessWidget {
         child: Container(
           color: const Color(0xFFE7F0EB),
           padding: const EdgeInsets.symmetric(
-            vertical: 40,
+            vertical: 10,
             horizontal: 20,
           ),
           child: Column(
