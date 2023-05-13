@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../components/title_widget.dart';
 import '../components/input_widget.dart';
 import '../components/primary_button.dart';
+import '../components/title_widget.dart';
 
-class Register extends StatelessWidget {
-  const Register({super.key});
+class Login extends StatelessWidget {
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +29,14 @@ class Register extends StatelessWidget {
                       color: Color(0xFF116531),
                     ),
                   ),
-                  const TitleWidget(title: 'Register'),
+                  const TitleWidget(title: 'Masuk'),
                 ],
               ),
-              Center(child: Image.asset('assets/images/user.png')),
-              const InputWidget(label: 'Nama'),
-              const SizedBox(height: 10),
               const InputWidget(label: 'Nomor Telepon'),
               const SizedBox(height: 10),
               const InputWidget(label: 'Kata Sandi', password: true),
               const SizedBox(height: 10),
-              PrimaryButton('Daftar', onTap: () {}),
+              PrimaryButton('Masuk', onTap: () {}),
             ],
           ),
         ),
