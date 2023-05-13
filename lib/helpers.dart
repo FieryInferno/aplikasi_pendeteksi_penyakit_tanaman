@@ -1,4 +1,4 @@
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/preview_widget.dart';
+import '../pages/preview_widget.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';

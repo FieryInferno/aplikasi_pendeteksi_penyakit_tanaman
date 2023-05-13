@@ -1,11 +1,11 @@
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/back_button.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
-import 'package:flutter/material.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/primary_button.dart';
-import 'dart:io';
+import '../helpers.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/result.dart';
+import 'dart:io';
+import '../pages/result.dart';
+import '../components/primary_button.dart';
+import '../components/back_button.dart';
 
 class PreviewWidget extends StatefulWidget {
   final File? image;

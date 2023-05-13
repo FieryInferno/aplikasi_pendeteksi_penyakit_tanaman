@@ -5,12 +5,16 @@ class TextWidget extends StatelessWidget {
   final FontWeight weight;
   final double size;
   final TextAlign align;
+  final Color color;
 
-  const TextWidget(this.title,
-      {super.key,
-      this.weight = FontWeight.normal,
-      this.size = 15,
-      this.align = TextAlign.left});
+  const TextWidget(
+    this.title, {
+    super.key,
+    this.weight = FontWeight.normal,
+    this.size = 15,
+    this.align = TextAlign.left,
+    this.color = Colors.black,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,7 @@ class TextWidget extends StatelessWidget {
         fontFamily: 'Quicksand',
         fontWeight: weight,
         fontSize: size,
+        color: color,
       ),
     );
   }
