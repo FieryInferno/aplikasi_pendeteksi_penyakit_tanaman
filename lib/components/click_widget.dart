@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../helpers.dart';
 
 class ClickWidget extends StatelessWidget {
   final Widget child;
@@ -10,12 +11,7 @@ class ClickWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => destination,
-        ),
-      ),
+      onTap: () => Helpers().redirectPage(context, destination),
       child: child,
     );
   }

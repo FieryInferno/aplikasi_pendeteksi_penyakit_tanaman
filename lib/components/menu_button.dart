@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../menu_model.dart';
+import '../helpers.dart';
 
 class MenuButton extends StatelessWidget {
   final String menu;
@@ -21,10 +22,7 @@ class MenuButton extends StatelessWidget {
         return IconButton(
           onPressed: () {
             Provider.of<MenuModel>(context, listen: false).setMenu(menu);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => destination),
-            );
+            Helpers().redirectPage(context, destination);
           },
           icon: Icon(
             icon,

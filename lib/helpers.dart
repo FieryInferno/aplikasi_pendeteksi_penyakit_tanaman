@@ -20,4 +20,11 @@ class Helpers {
   Future getImageByGaleri() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
   }
+
+  void redirectPage(context, Widget destination) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => destination),
+    );
+  }
 }

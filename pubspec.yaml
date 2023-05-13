@@ -66,6 +66,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/large-logo.png
     - assets/images/scan.png
+    - assets/images/user.png
     - assets/images/penyakit-1.png
     - assets/images/penyakit-2.png
     - assets/images/penyakit-3.png

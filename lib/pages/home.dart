@@ -139,12 +139,8 @@ class Home extends StatelessWidget {
                             fontFamily: 'Quicksand',
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RiwayatList()));
-                        },
+                        onPressed: () =>
+                            Helpers().redirectPage(context, RiwayatList()),
                       ),
                     ],
                   ),

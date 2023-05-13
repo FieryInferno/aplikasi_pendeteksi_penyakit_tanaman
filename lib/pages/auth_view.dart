@@ -1,5 +1,7 @@
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/primary_button.dart';
 import 'package:flutter/material.dart';
+import '../helpers.dart';
+import '../pages/register.dart';
 import '../components/menu.dart';
 import '../components/text_widget.dart';
 
@@ -48,7 +50,9 @@ class AuthView extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Column(children: [
-                          PrimaryButton('Daftar', onTap: () {}),
+                          PrimaryButton('Daftar',
+                              onTap: () => Helpers()
+                                  .redirectPage(context, const Register())),
                           const SizedBox(height: 10),
                           PrimaryButton('Masuk', onTap: () {}),
                         ]),
