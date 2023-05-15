@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '/helpers.dart';
 import '/pages/riwayat_list.dart';
-import '/pages/result.dart';
 import '/pages/blog_detail.dart';
-import '/components/riwayat_item.dart';
 import '/components/title_widget.dart';
 import '/components/blog_item.dart';
 import '/components/text_widget.dart';
 import '/components/click_widget.dart';
 import '/components/menu.dart';
-import '/data/riwayat.dart';
 import '/data/blogs.dart';
 
 class Home extends StatelessWidget {
-  final List<Map<String, String>> _list = Riwayat().list;
   final List<Map<String, String>> _blogs = Blogs().list;
   final picker = ImagePicker();
 
