@@ -147,16 +147,29 @@ class Home extends StatelessWidget {
                   const SizedBox(height: 10),
                   SizedBox(
                     height: 200,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => ClickWidget(
-                        destination: Result(riwayat: _list[index]),
-                        child: RiwayatItem(riwayat: _list[index]),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Image.asset('assets/images/riwayat.png'),
+                          const TextWidget(
+                            'Masuk untuk menyimpan riwayat penyakit',
+                            size: 25,
+                            align: TextAlign.center,
+                            color: Color(0xFF116531),
+                          ),
+                        ],
                       ),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 5),
-                      itemCount: _list.length,
                     ),
+                    // ListView.separated(
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemBuilder: (context, index) => ClickWidget(
+                    //     destination: Result(riwayat: _list[index]),
+                    //     child: RiwayatItem(riwayat: _list[index]),
+                    //   ),
+                    //   separatorBuilder: (context, index) =>
+                    //       const SizedBox(width: 5),
+                    //   itemCount: _list.length,
+                    // ),
                   ),
                   const SizedBox(height: 10),
                   const TitleWidget(title: 'Blog'),
