@@ -13,6 +13,7 @@ class PreviewWidget extends StatefulWidget {
   const PreviewWidget(this.image, {super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PreviewWidget createState() => _PreviewWidget();
 }
 

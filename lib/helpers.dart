@@ -1,11 +1,7 @@
-import 'package:provider/provider.dart';
-
 import '../pages/preview_widget.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-
-import 'menu_model.dart';
 
 class Helpers {
   final picker = ImagePicker();
@@ -22,6 +18,7 @@ class Helpers {
   }
 
   Future getImageByGaleri() async {
+    // ignore: unused_local_variable
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
   }
 

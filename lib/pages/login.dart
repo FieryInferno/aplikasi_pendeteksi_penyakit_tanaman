@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../menu_model.dart';
 import 'home.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +16,7 @@ class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _Login createState() => _Login();
 }
 
@@ -87,6 +90,13 @@ class _Login extends State<Login> {
                           );
 
                           if (response.statusCode == 200) {
+                            final body = jsonDecode(response.body);
+                            final SharedPreferences preferences =
+                                await SharedPreferences.getInstance();
+
+                            await preferences.setString(
+                                'token', body['data']['token']);
+
                             // ignore: use_build_context_synchronously
                             Provider.of<MenuModel>(context, listen: false)
                                 .setMenu('home');

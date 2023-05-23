@@ -11,6 +11,7 @@ class Result extends StatefulWidget {
   const Result({super.key, this.riwayat});
 
   @override
+  // ignore: library_private_types_in_public_api
   _Result createState() => _Result();
 }
 

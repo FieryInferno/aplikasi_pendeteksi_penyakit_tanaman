@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../components/riwayat_item.dart';
+import '../data/riwayat.dart';
 import '/helpers.dart';
 import '/pages/riwayat_list.dart';
 import '/pages/blog_detail.dart';
@@ -9,12 +12,30 @@ import '/components/text_widget.dart';
 import '/components/click_widget.dart';
 import '/components/menu.dart';
 import '/data/blogs.dart';
+import 'result.dart';
 
 class Home extends StatelessWidget {
   final List<Map<String, String>> _blogs = Blogs().list;
+  final List<Map<String, String>> _list = Riwayat().list;
   final picker = ImagePicker();
 
   Home({super.key});
+
+  Future<Widget> getRiwayat() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    return preferences.getString('token') != null
+        ? ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => ClickWidget(
+              destination: Result(riwayat: _list[index]),
+              child: RiwayatItem(riwayat: _list[index]),
+            ),
+            separatorBuilder: (context, index) => const SizedBox(width: 5),
+            itemCount: _list.length,
+          )
+        : const SizedBox();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,28 +174,27 @@ class Home extends StatelessWidget {
                       SizedBox(
                         height: 200,
                         child: Center(
-                          child: Column(
-                            children: [
-                              Image.asset('assets/images/riwayat.png'),
-                              const TextWidget(
-                                'Masuk untuk menyimpan riwayat penyakit',
-                                size: 25,
-                                align: TextAlign.center,
-                                color: Color(0xFF116531),
-                              ),
-                            ],
+                          child: FutureBuilder(
+                            future: getRiwayat(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return snapshot.data!;
+                              } else {
+                                return Column(
+                                  children: [
+                                    Image.asset('assets/images/riwayat.png'),
+                                    const TextWidget(
+                                      'Masuk untuk menyimpan riwayat penyakit',
+                                      size: 25,
+                                      align: TextAlign.center,
+                                      color: Color(0xFF116531),
+                                    ),
+                                  ],
+                                );
+                              }
+                            },
                           ),
                         ),
-                        // ListView.separated(
-                        //   scrollDirection: Axis.horizontal,
-                        //   itemBuilder: (context, index) => ClickWidget(
-                        //     destination: Result(riwayat: _list[index]),
-                        //     child: RiwayatItem(riwayat: _list[index]),
-                        //   ),
-                        //   separatorBuilder: (context, index) =>
-                        //       const SizedBox(width: 5),
-                        //   itemCount: _list.length,
-                        // ),
                       ),
                       const SizedBox(height: 10),
                       const TitleWidget(title: 'Blog'),

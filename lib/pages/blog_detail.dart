@@ -9,6 +9,7 @@ class BlogDetail extends StatefulWidget {
   const BlogDetail(this.blogData, {super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BlogDetail createState() => _BlogDetail();
 }
 
