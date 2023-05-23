@@ -22,166 +22,178 @@ class Home extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              color: const Color(0xFFE7F0EB),
-              padding: const EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: const Color(0xFFE7F0EB),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 20,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        'assets/images/logo.png',
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const TextWidget(
-                        'Daun Daunan',
-                        weight: FontWeight.bold,
-                        size: 24,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return SizedBox(
-                            height: 125,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () => Helpers().getImage(context),
-                                      child: Row(
-                                        children: const [
-                                          Icon(Icons.photo_camera),
-                                          SizedBox(width: 5),
-                                          Text('Ambil Foto'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () => Helpers().getImageByGaleri(),
-                                      child: Row(
-                                        children: const [
-                                          Icon(Icons.image),
-                                          SizedBox(width: 5),
-                                          Text('Galeri'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    child: Card(
-                      color: const Color(0xFFCCDDD3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 25,
-                        ),
-                        child: Row(
-                          children: [
-                            const Flexible(
-                              child: Text(
-                                'Cari tahu penyakit tanaman kamu disini',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  fontFamily: 'Quicksand',
-                                ),
-                              ),
-                            ),
-                            Image.asset('assets/images/scan.png'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const TitleWidget(
-                        title: 'Riwayat',
-                      ),
-                      TextButton(
-                        child: const Text(
-                          'Lihat Semua',
-                          style: TextStyle(
-                            color: Color(0xFF116531),
-                            fontFamily: 'Quicksand',
-                          ),
-                        ),
-                        onPressed: () =>
-                            Helpers().redirectPage(context, RiwayatList()),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: Column(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Image.asset('assets/images/riwayat.png'),
+                          Image.asset(
+                            'assets/images/logo.png',
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
                           const TextWidget(
-                            'Masuk untuk menyimpan riwayat penyakit',
-                            size: 25,
-                            align: TextAlign.center,
-                            color: Color(0xFF116531),
+                            'Daun Daunan',
+                            weight: FontWeight.bold,
+                            size: 24,
                           ),
                         ],
                       ),
-                    ),
-                    // ListView.separated(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemBuilder: (context, index) => ClickWidget(
-                    //     destination: Result(riwayat: _list[index]),
-                    //     child: RiwayatItem(riwayat: _list[index]),
-                    //   ),
-                    //   separatorBuilder: (context, index) =>
-                    //       const SizedBox(width: 5),
-                    //   itemCount: _list.length,
-                    // ),
-                  ),
-                  const SizedBox(height: 10),
-                  const TitleWidget(title: 'Blog'),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: ListView.separated(
-                      itemBuilder: (context, index) => ClickWidget(
-                        destination: BlogDetail(_blogs[index]),
-                        child: BlogItem(blog: _blogs[index]),
+                      const SizedBox(height: 10),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SizedBox(
+                                height: 125,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () =>
+                                              Helpers().getImage(context),
+                                          child: Row(
+                                            children: const [
+                                              Icon(Icons.photo_camera),
+                                              SizedBox(width: 5),
+                                              Text('Ambil Foto'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () =>
+                                              Helpers().getImageByGaleri(),
+                                          child: Row(
+                                            children: const [
+                                              Icon(Icons.image),
+                                              SizedBox(width: 5),
+                                              Text('Galeri'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Card(
+                          color: const Color(0xFFCCDDD3),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 20,
+                              horizontal: 25,
+                            ),
+                            child: Row(
+                              children: [
+                                const Flexible(
+                                  child: Text(
+                                    'Cari tahu penyakit tanaman kamu disini',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24,
+                                      fontFamily: 'Quicksand',
+                                    ),
+                                  ),
+                                ),
+                                Image.asset('assets/images/scan.png'),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 5),
-                      itemCount: _blogs.length,
-                    ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const TitleWidget(
+                            title: 'Riwayat',
+                          ),
+                          TextButton(
+                            child: const Text(
+                              'Lihat Semua',
+                              style: TextStyle(
+                                color: Color(0xFF116531),
+                                fontFamily: 'Quicksand',
+                              ),
+                            ),
+                            onPressed: () =>
+                                Helpers().redirectPage(context, RiwayatList()),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: 200,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/riwayat.png'),
+                              const TextWidget(
+                                'Masuk untuk menyimpan riwayat penyakit',
+                                size: 25,
+                                align: TextAlign.center,
+                                color: Color(0xFF116531),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // ListView.separated(
+                        //   scrollDirection: Axis.horizontal,
+                        //   itemBuilder: (context, index) => ClickWidget(
+                        //     destination: Result(riwayat: _list[index]),
+                        //     child: RiwayatItem(riwayat: _list[index]),
+                        //   ),
+                        //   separatorBuilder: (context, index) =>
+                        //       const SizedBox(width: 5),
+                        //   itemCount: _list.length,
+                        // ),
+                      ),
+                      const SizedBox(height: 10),
+                      const TitleWidget(title: 'Blog'),
+                      const SizedBox(height: 10),
+                      LimitedBox(
+                        maxHeight: 250,
+                        child: ListView.separated(
+                          itemBuilder: (context, index) => ClickWidget(
+                            destination: BlogDetail(_blogs[index]),
+                            child: BlogItem(blog: _blogs[index]),
+                          ),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 5),
+                          itemCount: _blogs.length,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             const Menu(),
