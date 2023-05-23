@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:provider/provider.dart';
+import '../menu_model.dart';
 import 'home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,26 +72,33 @@ class _Login extends State<Login> {
                         value == '' ? 'Kata sandi tidak boleh kosong' : null,
                   ),
                   const SizedBox(height: 10),
-                  PrimaryButton('Masuk', onTap: () async {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() => _loading = true);
+                  Consumer<MenuModel>(
+                    builder: (context, value, child) {
+                      return PrimaryButton('Masuk', onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() => _loading = true);
 
-                      var response = await http.post(
-                        Uri.https(
-                          'toko-dizital.et.r.appspot.com',
-                          '/api/v1/auth/login/',
-                        ),
-                        body: _dataUser,
-                      );
+                          var response = await http.post(
+                            Uri.https(
+                              'toko-dizital.et.r.appspot.com',
+                              '/api/v1/auth/login/',
+                            ),
+                            body: _dataUser,
+                          );
 
-                      if (response.statusCode == 200) {
-                        // ignore: use_build_context_synchronously
-                        Helpers().redirectPage(context, Home());
-                      }
+                          if (response.statusCode == 200) {
+                            // ignore: use_build_context_synchronously
+                            Provider.of<MenuModel>(context, listen: false)
+                                .setMenu('home');
+                            // ignore: use_build_context_synchronously
+                            Helpers().redirectPage(context, Home());
+                          }
 
-                      setState(() => _loading = false);
-                    }
-                  }),
+                          setState(() => _loading = false);
+                        }
+                      });
+                    },
+                  )
                 ],
               ),
             ),
