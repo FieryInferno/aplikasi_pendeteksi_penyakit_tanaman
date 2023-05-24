@@ -1,11 +1,11 @@
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/menu_model.dart';
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/menu_model.dart';
 import '/components/menu_button.dart';
 import '/pages/home.dart';
 import '/pages/blog_list.dart';
 import '/pages/auth_view.dart';
+import '/pages/profile.dart';
 
 class Menu extends StatelessWidget {
   const Menu({super.key});
@@ -52,7 +52,7 @@ class Menu extends StatelessWidget {
                       return MenuButton(
                         menu: 'profile',
                         destination:
-                            snapshot.data! ? const Login() : const AuthView(),
+                            snapshot.data! ? const Profile() : const AuthView(),
                         icon: Icons.person,
                       );
                     }
