@@ -1,4 +1,7 @@
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/menu_model.dart';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/components/menu_button.dart';
 import '/pages/home.dart';
 import '/pages/blog_list.dart';
@@ -40,10 +43,24 @@ class Menu extends StatelessWidget {
               destination: BlogList(),
               icon: Icons.description,
             ),
-            const MenuButton(
-              menu: 'profile',
-              destination: AuthView(),
-              icon: Icons.person,
+            Consumer<MenuModel>(
+              builder: (context, value, child) {
+                return FutureBuilder(
+                  future: value.isLogin,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return MenuButton(
+                        menu: 'profile',
+                        destination:
+                            snapshot.data! ? const Login() : const AuthView(),
+                        icon: Icons.person,
+                      );
+                    }
+
+                    return const SizedBox();
+                  },
+                );
+              },
             ),
           ],
         ),
