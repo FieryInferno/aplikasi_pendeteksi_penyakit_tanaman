@@ -4,9 +4,9 @@ import 'text_widget.dart';
 
 class PageWrapper extends StatelessWidget {
   final String pageName;
-  final List<Widget>? children;
+  final Widget? child;
 
-  const PageWrapper(this.pageName, {super.key, this.children});
+  const PageWrapper(this.pageName, {super.key, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +38,7 @@ class PageWrapper extends StatelessWidget {
               ),
               Expanded(
                 flex: 20,
-                child: Column(
-                  children: children!,
-                ),
+                child: child ?? const SizedBox(),
               ),
               const Menu(),
             ],

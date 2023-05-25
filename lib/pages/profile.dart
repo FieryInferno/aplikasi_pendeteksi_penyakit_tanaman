@@ -10,30 +10,32 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageWrapper(
       'Profile',
-      children: [
-        Expanded(
-          child: Column(
-            children: [
-              TextButton(
-                onPressed: () {},
-                child: const Text('Edit'),
-              ),
-              Image.asset('assets/images/foto-profile.png'),
-              InputWidget(
-                label: 'Nama',
-                value: 'M. Bagas Setia',
-                disabled: true,
-              ),
-              InputWidget(
-                label: 'Nomor Telepon',
-                value: '083895358071',
-                disabled: true,
-              ),
-            ],
+      child: Column(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: const Text('Edit'),
+                ),
+                Image.asset('assets/images/foto-profile.png'),
+                InputWidget(
+                  label: 'Nama',
+                  value: 'M. Bagas Setia',
+                  disabled: true,
+                ),
+                InputWidget(
+                  label: 'Nomor Telepon',
+                  value: '083895358071',
+                  disabled: true,
+                ),
+              ],
+            ),
           ),
-        ),
-        PrimaryButton('Keluar', onTap: () {}),
-      ],
+          PrimaryButton('Keluar', onTap: () {}),
+        ],
+      ),
     );
   }
 }
