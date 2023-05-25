@@ -14,10 +14,7 @@ class PrimaryButton extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 100,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: const Color(0xFF99D98C),

@@ -12,58 +12,54 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 20,
-      left: 20,
-      right: 20,
-      child: Container(
-        height: 62,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            MenuButton(
-              menu: 'home',
-              destination: Home(),
-              icon: Icons.home,
-            ),
-            MenuButton(
-              menu: 'blog',
-              destination: BlogList(),
-              icon: Icons.description,
-            ),
-            Consumer<MenuModel>(
-              builder: (context, value, child) {
-                return FutureBuilder(
-                  future: value.isLogin,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return MenuButton(
-                        menu: 'profile',
-                        destination:
-                            snapshot.data! ? const Profile() : const AuthView(),
-                        icon: Icons.person,
-                      );
-                    }
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.only(top: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          MenuButton(
+            menu: 'home',
+            destination: Home(),
+            icon: Icons.home,
+          ),
+          MenuButton(
+            menu: 'blog',
+            destination: BlogList(),
+            icon: Icons.description,
+          ),
+          Consumer<MenuModel>(
+            builder: (context, value, child) {
+              return FutureBuilder(
+                future: value.isLogin,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return MenuButton(
+                      menu: 'profile',
+                      destination:
+                          snapshot.data! ? const Profile() : const AuthView(),
+                      icon: Icons.person,
+                    );
+                  }
 
-                    return const SizedBox();
-                  },
-                );
-              },
-            ),
-          ],
-        ),
+                  return const SizedBox();
+                },
+              );
+            },
+          ),
+        ],
       ),
     );
   }
