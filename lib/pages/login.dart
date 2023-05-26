@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../menu_model.dart';
-import 'home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../helpers.dart';
-import '../components/input_widget.dart';
-import '../components/primary_button.dart';
-import '../components/title_widget.dart';
+import '/menu_model.dart';
+import 'home.dart';
+import '/helpers.dart';
+import '/components/input_widget.dart';
+import '/components/primary_button.dart';
+import '/components/title_widget.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -75,40 +75,36 @@ class _Login extends State<Login> {
                         value == '' ? 'Kata sandi tidak boleh kosong' : null,
                   ),
                   const SizedBox(height: 10),
-                  Consumer<MenuModel>(
-                    builder: (context, value, child) {
-                      return PrimaryButton('Masuk', onTap: () async {
-                        if (_formKey.currentState!.validate()) {
-                          setState(() => _loading = true);
+                  PrimaryButton('Masuk', onTap: () async {
+                    if (_formKey.currentState!.validate()) {
+                      setState(() => _loading = true);
 
-                          var response = await http.post(
-                            Uri.https(
-                              'toko-dizital.et.r.appspot.com',
-                              '/api/v1/auth/login/',
-                            ),
-                            body: _dataUser,
-                          );
+                      var response = await http.post(
+                        Uri.https(
+                          'toko-dizital.et.r.appspot.com',
+                          '/api/v1/auth/login/',
+                        ),
+                        body: _dataUser,
+                      );
 
-                          if (response.statusCode == 200) {
-                            final body = jsonDecode(response.body);
-                            final SharedPreferences preferences =
-                                await SharedPreferences.getInstance();
+                      if (response.statusCode == 200) {
+                        final body = jsonDecode(response.body);
+                        final SharedPreferences preferences =
+                            await SharedPreferences.getInstance();
 
-                            await preferences.setString(
-                                'token', body['data']['token']);
+                        await preferences.setString(
+                            'token', body['data']['token']);
 
-                            // ignore: use_build_context_synchronously
-                            Provider.of<MenuModel>(context, listen: false)
-                                .setMenu('home');
-                            // ignore: use_build_context_synchronously
-                            Helpers().redirectPage(context, Home());
-                          }
+                        // ignore: use_build_context_synchronously
+                        Provider.of<MenuModel>(context, listen: false)
+                            .setMenu('home');
+                        // ignore: use_build_context_synchronously
+                        Helpers().redirectPage(context, Home());
+                      }
 
-                          setState(() => _loading = false);
-                        }
-                      });
-                    },
-                  )
+                      setState(() => _loading = false);
+                    }
+                  }),
                 ],
               ),
             ),

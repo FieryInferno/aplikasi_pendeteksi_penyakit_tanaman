@@ -34,7 +34,17 @@ class Home extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(width: 5),
             itemCount: _list.length,
           )
-        : const SizedBox();
+        : Column(
+            children: [
+              Image.asset('assets/images/riwayat.png'),
+              const TextWidget(
+                'Masuk untuk menyimpan riwayat penyakit',
+                size: 25,
+                align: TextAlign.center,
+                color: Color(0xFF116531),
+              ),
+            ],
+          );
   }
 
   @override
