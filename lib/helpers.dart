@@ -25,7 +25,7 @@ class Helpers {
   void redirectPage(context, Widget destination) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => destination),
+      MaterialPageRoute(builder: (BuildContext context) => destination),
     );
   }
 }

@@ -21,8 +21,10 @@ class MenuButton extends StatelessWidget {
       builder: (context, value, child) {
         return IconButton(
           onPressed: () {
-            Provider.of<MenuModel>(context, listen: false).setMenu(menu);
-            Helpers().redirectPage(context, destination);
+            if (value.currentMenu != menu) {
+              Provider.of<MenuModel>(context, listen: false).setMenu(menu);
+              Helpers().redirectPage(context, destination);
+            }
           },
           icon: Icon(
             icon,
