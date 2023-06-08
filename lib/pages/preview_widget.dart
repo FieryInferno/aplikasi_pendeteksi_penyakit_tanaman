@@ -1,9 +1,10 @@
-import '../helpers.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:io';
 import '../pages/result.dart';
+import '../helpers.dart';
 import '../components/primary_button.dart';
 import '../components/back_button.dart';
 
@@ -60,7 +61,13 @@ class _PreviewWidget extends State<PreviewWidget> {
                 ),
                 PrimaryButton(
                   'Ambil Ulang',
-                  onTap: () => Helpers().getImage(context),
+                  onTap: () {
+                    XFile pickedFile = Helpers().getImage() as XFile;
+                    Helpers().redirectPage(
+                      context,
+                      PreviewWidget(File(pickedFile.path)),
+                    );
+                  },
                 ),
               ],
             ),
