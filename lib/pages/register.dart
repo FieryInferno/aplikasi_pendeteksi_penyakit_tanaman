@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../helpers.dart';
 import '../components/title_widget.dart';
 import '../components/input_widget.dart';
 import '../components/primary_button.dart';
@@ -32,7 +33,13 @@ class Register extends StatelessWidget {
                   const TitleWidget(title: 'Register'),
                 ],
               ),
-              Center(child: Image.asset('assets/images/user.png')),
+              InkWell(
+                child: Center(child: Image.asset('assets/images/user.png')),
+                onTap: () {
+                  Helpers helpers = Helpers();
+                  helpers.showModalImage(context);
+                },
+              ),
               InputWidget(label: 'Nama'),
               const SizedBox(height: 10),
               InputWidget(label: 'Nomor Telepon'),
