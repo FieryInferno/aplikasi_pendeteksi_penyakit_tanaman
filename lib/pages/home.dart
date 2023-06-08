@@ -56,45 +56,8 @@ class Home extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return SizedBox(
-                    height: 125,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => Helpers().getImage(context),
-                              child: Row(
-                                children: const [
-                                  Icon(Icons.photo_camera),
-                                  SizedBox(width: 5),
-                                  Text('Ambil Foto'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => Helpers().getImageByGaleri(),
-                              child: Row(
-                                children: const [
-                                  Icon(Icons.image),
-                                  SizedBox(width: 5),
-                                  Text('Galeri'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
+              Helpers helpers = Helpers();
+              helpers.showModalImage(context);
             },
             child: Card(
               color: const Color(0xFFCCDDD3),
