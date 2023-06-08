@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class MenuModel extends ChangeNotifier {
   String currentMenu = 'home';
@@ -12,6 +13,6 @@ class MenuModel extends ChangeNotifier {
   Future<bool> get isLogin async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    return preferences.getString('token') != null ? true : false;
+    return !Jwt.isExpired(preferences.getString('token').toString());
   }
 }
