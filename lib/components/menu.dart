@@ -45,16 +45,13 @@ class Menu extends StatelessWidget {
               return FutureBuilder(
                 future: value.isLogin,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return MenuButton(
-                      menu: 'profile',
-                      destination:
-                          snapshot.data! ? const Profile() : const AuthView(),
-                      icon: Icons.person,
-                    );
-                  }
-
-                  return const SizedBox();
+                  return MenuButton(
+                    menu: 'profile',
+                    destination: snapshot.data != null
+                        ? const Profile()
+                        : const AuthView(),
+                    icon: Icons.person,
+                  );
                 },
               );
             },
