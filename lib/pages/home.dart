@@ -35,6 +35,7 @@ class Home extends StatelessWidget {
             itemCount: _list.length,
           )
         : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/images/riwayat.png'),
               const TextWidget(
@@ -53,6 +54,7 @@ class Home extends StatelessWidget {
       'Daun Daunan',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
             onTap: () {
@@ -70,6 +72,7 @@ class Home extends StatelessWidget {
                   horizontal: 25,
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Flexible(
                       child: Text(
@@ -77,7 +80,7 @@ class Home extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24,
+                          fontSize: 20,
                           fontFamily: 'Quicksand',
                         ),
                       ),
@@ -133,8 +136,7 @@ class Home extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           const TitleWidget(title: 'Blog'),
-          LimitedBox(
-            maxHeight: 270,
+          Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) => ClickWidget(
                 destination: BlogDetail(_blogs[index]),

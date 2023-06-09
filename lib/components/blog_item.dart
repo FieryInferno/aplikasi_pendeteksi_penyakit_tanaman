@@ -41,8 +41,8 @@ class BlogItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('${blog['date']}'),
-                      Text('${blog['author']}'),
+                      Flexible(child: Text('${blog['date']}')),
+                      Flexible(child: Text('${blog['author']}')),
                     ],
                   ),
                 ],

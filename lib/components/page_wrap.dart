@@ -25,7 +25,6 @@ class PageWrapper extends StatelessWidget {
             children: [
               Flexible(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Image.asset('assets/images/logo.png'),
                     const SizedBox(width: 10),
@@ -37,6 +36,7 @@ class PageWrapper extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
               Expanded(
                 flex: 20,
                 child: child ?? const SizedBox(),
