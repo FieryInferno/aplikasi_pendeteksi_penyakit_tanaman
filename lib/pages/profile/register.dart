@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../helpers.dart';
@@ -5,8 +6,16 @@ import '../../components/title_widget.dart';
 import '../../components/input_widget.dart';
 import '../../components/primary_button.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   const Register({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _Register createState() => _Register();
+}
+
+class _Register extends State<Register> {
+  File? fotoProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +44,42 @@ class Register extends StatelessWidget {
                 ],
               ),
               InkWell(
-                child: Center(child: Image.asset('assets/images/user.png')),
+                child: Center(
+                  child: ClipOval(
+                    child: fotoProfile != null
+                        ? Image.file(
+                            fotoProfile!,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            height: MediaQuery.of(context).size.height * 0.24,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/images/user.png',
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            height: MediaQuery.of(context).size.height * 0.24,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+
+                  // child: Container(
+                  //   width: MediaQuery.of(context).size.width * 0.5,
+                  //   height: MediaQuery.of(context).size.height * 0.5,
+                  //   decoration: const BoxDecoration(
+                  //     shape: BoxShape.circle,
+                  //     color: Colors.amber,
+                  //   ),
+                  //   child: fotoProfile != null
+                  //       ? Image.file(fotoProfile!)
+                  //       : Image.asset('assets/images/user.png'),
+                  // ),
+                ),
                 onTap: () {
                   Helpers helpers = Helpers();
-                  helpers.showModalImage(context, () {
-                    XFile pickedFile = Helpers().getImage(context) as XFile;
-                    print(pickedFile);
+                  helpers.showModalImage(context, () async {
+                    XFile pickedFile =
+                        await Helpers().getImage(context) as XFile;
+
+                    setState(() => fotoProfile = File(pickedFile.path));
                   });
                 },
               ),
