@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:provider/provider.dart';
-import '/pages/home.dart';
-import '/menu_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../pages/home.dart';
+import '../menu_model.dart';
 
 void main() => runApp(
       ChangeNotifierProvider(
@@ -9,6 +11,14 @@ void main() => runApp(
         child: const MyApp(),
       ),
     );
+
+Future<void> get isLogin async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+
+  if (Jwt.isExpired(preferences.getString('token').toString())) {
+    preferences.clear();
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -23,7 +33,12 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: SafeArea(child: Home()),
+      home: SafeArea(
+        child: FutureBuilder(
+          future: isLogin,
+          builder: (context, snapshot) => Home(),
+        ),
+      ),
     );
   }
 }
