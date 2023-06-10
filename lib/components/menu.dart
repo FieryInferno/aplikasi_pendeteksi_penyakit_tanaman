@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/menu_model.dart';
-import '/components/menu_button.dart';
-import '/pages/home.dart';
-import '/pages/blog_list.dart';
-import '/pages/auth_view.dart';
-import '/pages/profile/profile.dart';
+import '../menu_model.dart';
+import '../components/menu_button.dart';
+import '../pages/home.dart';
+import '../pages/blog_list.dart';
+import '../pages/profile/auth_view.dart';
+import '../pages/profile/profile.dart';
 
 class Menu extends StatelessWidget {
   const Menu({super.key});

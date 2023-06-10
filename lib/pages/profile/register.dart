@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../helpers.dart';
-import '../components/title_widget.dart';
-import '../components/input_widget.dart';
-import '../components/primary_button.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../helpers.dart';
+import '../../components/title_widget.dart';
+import '../../components/input_widget.dart';
+import '../../components/primary_button.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -37,7 +38,10 @@ class Register extends StatelessWidget {
                 child: Center(child: Image.asset('assets/images/user.png')),
                 onTap: () {
                   Helpers helpers = Helpers();
-                  helpers.showModalImage(context);
+                  helpers.showModalImage(context, () {
+                    XFile pickedFile = Helpers().getImage(context) as XFile;
+                    print(pickedFile);
+                  });
                 },
               ),
               InputWidget(label: 'Nama'),

@@ -23,7 +23,7 @@ class Profile extends StatelessWidget {
                   child: TextButton(
                     onPressed: () => Helpers().redirectPage(
                       context,
-                      EditProfile(),
+                      const EditProfile(),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
