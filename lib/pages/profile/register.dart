@@ -41,8 +41,11 @@ class _Register extends State<Register> {
         'phone_number': _phoneNumberController.text.trim(),
         'password': _passwordController.text.trim(),
       });
-      formData.files
-          .add(await http.MultipartFile.fromPath('image', fotoProfile!.path));
+
+      if (fotoProfile != null) {
+        formData.files
+            .add(await http.MultipartFile.fromPath('image', fotoProfile!.path));
+      }
 
       var response = await formData.send();
 
@@ -58,93 +61,105 @@ class _Register extends State<Register> {
   @override
   Widget build(BuildContext context) {
     List<Widget> listWidget = [
-      Container(
-        color: const Color(0xFFE7F0EB),
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 20,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    size: 40,
-                    color: Color(0xFF116531),
+      SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          color: const Color(0xFFE7F0EB),
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(
+                      Icons.keyboard_arrow_left,
+                      size: 40,
+                      color: Color(0xFF116531),
+                    ),
                   ),
-                ),
-                const TitleWidget(title: 'Register'),
-              ],
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      child: Center(
-                        child: ClipOval(
-                          child: fotoProfile != null
-                              ? Image.file(
-                                  fotoProfile!,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.24,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  'assets/images/user.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.24,
-                                  fit: BoxFit.cover,
-                                ),
+                  const TitleWidget(title: 'Register'),
+                ],
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: InkWell(
+                          child: ClipOval(
+                            child: fotoProfile != null
+                                ? Image.file(
+                                    fotoProfile!,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.24,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    'assets/images/user.png',
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.24,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                          onTap: () {
+                            Helpers helpers = Helpers();
+                            helpers.showModalImage(context, () async {
+                              XFile pickedFile =
+                                  await Helpers().getImage(context) as XFile;
+
+                              setState(
+                                  () => fotoProfile = File(pickedFile.path));
+                            });
+                          },
                         ),
                       ),
-                      onTap: () {
-                        Helpers helpers = Helpers();
-                        helpers.showModalImage(context, () async {
-                          XFile pickedFile =
-                              await Helpers().getImage(context) as XFile;
-
-                          setState(() => fotoProfile = File(pickedFile.path));
-                        });
-                      },
-                    ),
-                    InputWidget(
-                      label: 'Nama',
-                      validator: (value) =>
-                          value!.isEmpty ? 'Nama tidak boleh kosong' : null,
-                      controller: _nameController,
-                    ),
-                    const SizedBox(height: 10),
-                    InputWidget(
-                      label: 'Nomor Telepon',
-                      validator: (value) => value!.isEmpty
-                          ? 'Nomor telepon tidak boleh kosong'
-                          : null,
-                      controller: _phoneNumberController,
-                    ),
-                    const SizedBox(height: 10),
-                    InputWidget(
-                      label: 'Kata Sandi',
-                      password: true,
-                      validator: (value) => value!.isEmpty
-                          ? 'Kata sandi tidak boleh kosong'
-                          : null,
-                      controller: _passwordController,
-                    ),
-                    const SizedBox(height: 10),
-                    PrimaryButton('Daftar', onTap: _submitForm),
-                  ]),
-            ),
-          ],
+                      InputWidget(
+                        label: 'Nama',
+                        validator: (value) =>
+                            value!.isEmpty ? 'Nama tidak boleh kosong' : null,
+                        controller: _nameController,
+                      ),
+                      const SizedBox(height: 10),
+                      InputWidget(
+                        label: 'Nomor Telepon',
+                        validator: (value) => value!.isEmpty
+                            ? 'Nomor telepon tidak boleh kosong'
+                            : null,
+                        controller: _phoneNumberController,
+                      ),
+                      const SizedBox(height: 10),
+                      InputWidget(
+                        label: 'Kata Sandi',
+                        password: true,
+                        validator: (value) => value!.isEmpty
+                            ? 'Kata sandi tidak boleh kosong'
+                            : null,
+                        controller: _passwordController,
+                      ),
+                      const SizedBox(height: 30),
+                      PrimaryButton('Daftar', onTap: _submitForm),
+                    ]),
+              ),
+            ],
+          ),
+        ),
+      ),
+      Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: SizedBox(
+          height: MediaQuery.of(context).viewInsets.bottom,
         ),
       ),
     ];
@@ -152,10 +167,8 @@ class _Register extends State<Register> {
     if (_isLoading) listWidget.add(const Loading());
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Stack(children: listWidget),
-      ),
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(child: Stack(children: listWidget)),
     );
   }
 }
