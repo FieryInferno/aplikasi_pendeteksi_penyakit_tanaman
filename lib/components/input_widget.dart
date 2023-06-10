@@ -19,7 +19,7 @@ class InputWidget extends StatelessWidget {
     this.disabled,
     TextEditingController? controller,
   }) : _controller = controller ?? TextEditingController() {
-    _controller.text = value ?? '';
+    if (value != null) _controller.text = value;
   }
 
   @override

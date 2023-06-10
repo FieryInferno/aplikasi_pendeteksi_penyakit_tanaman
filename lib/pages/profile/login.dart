@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '/menu_model.dart';
-import 'home.dart';
+import '../home.dart';
 import '/helpers.dart';
 import '/components/input_widget.dart';
 import '/components/primary_button.dart';

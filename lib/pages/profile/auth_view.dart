@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/helpers.dart';
 import 'register.dart';
-import '/pages/login.dart';
+import 'login.dart';
 import '/components/text_widget.dart';
 import '/components/primary_button.dart';
 import '/components/page_wrap.dart';
