@@ -26,6 +26,7 @@ class TextWidget extends StatelessWidget {
         fontWeight: weight,
         fontSize: size,
         color: color,
+        decoration: TextDecoration.none,
       ),
     );
   }
