@@ -21,11 +21,9 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
-  final Map<String, String> _dataUser = {
-    'phone_number': '',
-    'password': '',
-  };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _loading = false;
 
   @override
@@ -60,21 +58,19 @@ class _Login extends State<Login> {
                 children: [
                   InputWidget(
                     label: 'Nomor Telepon',
-                    onChanged: (value) =>
-                        setState(() => _dataUser['phone_number'] = value),
                     validator: (value) =>
                         value == '' ? 'Nomor telepon tidak boleh kosong' : null,
+                    controller: _phoneNumberController,
                   ),
                   const SizedBox(height: 10),
                   InputWidget(
                     label: 'Kata Sandi',
                     password: true,
-                    onChanged: (value) =>
-                        setState(() => _dataUser['password'] = value),
                     validator: (value) =>
                         value == '' ? 'Kata sandi tidak boleh kosong' : null,
+                    controller: _passwordController,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
                   PrimaryButton('Masuk', onTap: () async {
                     if (_formKey.currentState!.validate()) {
                       setState(() => _loading = true);
@@ -84,7 +80,10 @@ class _Login extends State<Login> {
                           'toko-dizital.et.r.appspot.com',
                           '/api/v1/auth/login/',
                         ),
-                        body: _dataUser,
+                        body: {
+                          'phone_number': _phoneNumberController.text.trim(),
+                          'password': _passwordController.text.trim(),
+                        },
                       );
 
                       if (response.statusCode == 200) {
