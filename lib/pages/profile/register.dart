@@ -8,7 +8,7 @@ import '../../components/loading.dart';
 import '../../components/title_widget.dart';
 import '../../components/input_widget.dart';
 import '../../components/primary_button.dart';
-import '../../components/text_widget.dart';
+import '../../components/alert_widget.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -18,108 +18,15 @@ class Register extends StatefulWidget {
   _Register createState() => _Register();
 }
 
-class _Register extends State<Register> with SingleTickerProviderStateMixin {
+class _Register extends State<Register> {
   File? fotoProfile;
   late bool _isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  OverlayEntry? _overlayEntry;
-  AnimationController? _animationController;
-  late Animation<double> _opacityAnimation;
-  late Animation<double> _heightAnimation;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 150),
-      vsync: this,
-    );
-    _opacityAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController!);
-  }
-
-  @override
-  void dispose() {
-    _animationController!.dispose();
-    super.dispose();
-  }
-
-  void _successAlert() {
-    _heightAnimation = Tween<double>(
-      begin: 0.0,
-      end: MediaQuery.of(context).size.height * 0.1,
-    ).animate(_animationController!);
-
-    _overlayEntry = OverlayEntry(
-      builder: (BuildContext context) => Positioned(
-        top: 0,
-        right: 0,
-        left: 0,
-        child: AnimatedBuilder(
-          animation: _animationController!,
-          builder: (BuildContext context, Widget? child) {
-            return Opacity(
-              opacity: _opacityAnimation.value,
-              child: SafeArea(
-                child: Container(
-                  height: _heightAnimation.value,
-                  margin: const EdgeInsets.only(top: 10, right: 10, left: 10),
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.green,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: const [
-                            Icon(Icons.check_circle, color: Colors.white),
-                            SizedBox(width: 5),
-                            TextWidget(
-                              'Success',
-                              weight: FontWeight.bold,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        const TextWidget(
-                          'Register berhasil, silahkan melakukan login',
-                          color: Colors.white,
-                          size: 15,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-
-    Overlay.of(context).insert(_overlayEntry!);
-    _animationController!.forward();
-    // Atur durasi tampilan SnackBar
-    Future.delayed(const Duration(seconds: 3), () {
-      _animationController!.reverse();
-
-      Future.delayed(const Duration(milliseconds: 400), () {
-        _overlayEntry?.remove();
-        _overlayEntry = null;
-      });
-    });
-  }
-
-  void _submitForm() async {
+  void _submitForm(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
@@ -147,9 +54,12 @@ class _Register extends State<Register> with SingleTickerProviderStateMixin {
 
       if (response.statusCode == 200) {
         // ignore: use_build_context_synchronously
-        _successAlert();
-        // ignore: use_build_context_synchronously
         Helpers().redirectPage(context, const Login());
+
+        Future.delayed(
+          const Duration(milliseconds: 150),
+          () => showCustomAlert(context),
+        );
       }
 
       setState(() => _isLoading = false);
@@ -244,7 +154,7 @@ class _Register extends State<Register> with SingleTickerProviderStateMixin {
                       controller: _passwordController,
                     ),
                     const SizedBox(height: 30),
-                    PrimaryButton('Daftar', onTap: _submitForm),
+                    PrimaryButton('Daftar', onTap: () => _submitForm(context)),
                   ],
                 ),
               ),

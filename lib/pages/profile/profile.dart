@@ -2,11 +2,11 @@ import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/text_widget.dart
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'auth_view.dart';
 import '/pages/profile/edit_profile.dart';
 import '/components/page_wrap.dart';
 import '/components/input_widget.dart';
 import '/components/primary_button.dart';
-import 'auth_view.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -61,6 +61,7 @@ class Profile extends StatelessWidget {
                 await SharedPreferences.getInstance();
 
             preferences.clear();
+            // AlertWidget().successAlert(context);
             // ignore: use_build_context_synchronously
             Helpers().redirectPage(context, const AuthView());
           }),
