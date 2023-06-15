@@ -67,7 +67,11 @@ class Profile extends StatelessWidget {
 
             Future.delayed(
               const Duration(milliseconds: 150),
-              () => showCustomAlert(context, message: 'Anda berhasil logout'),
+              () => showCustomAlert(
+                context,
+                message: 'Anda berhasil logout',
+                type: 'success',
+              ),
             );
           }),
         ],

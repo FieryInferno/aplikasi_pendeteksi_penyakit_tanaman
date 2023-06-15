@@ -63,6 +63,7 @@ class _Register extends State<Register> {
           () => showCustomAlert(
             context,
             message: 'Register berhasil, silahkan melakukan login',
+            type: 'success',
           ),
         );
       } else {

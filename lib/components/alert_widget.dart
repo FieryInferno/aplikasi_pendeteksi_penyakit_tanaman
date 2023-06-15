@@ -4,8 +4,9 @@ import 'text_widget.dart';
 
 class AlertWidget extends StatefulWidget {
   final String message;
+  final String type;
 
-  const AlertWidget({super.key, required this.message});
+  const AlertWidget({super.key, required this.message, required this.type});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -62,20 +63,24 @@ class _AlertWidget extends State<AlertWidget>
               height: _heightAnimation.value,
               margin: const EdgeInsets.only(top: 10, right: 10, left: 10),
               padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Colors.green,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                color: widget.type == 'error' ? Colors.red : Colors.green,
               ),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      children: const [
-                        Icon(Icons.check_circle, color: Colors.white),
-                        SizedBox(width: 5),
+                      children: [
+                        Icon(
+                            widget.type == 'error'
+                                ? Icons.warning
+                                : Icons.check_circle,
+                            color: Colors.white),
+                        const SizedBox(width: 5),
                         TextWidget(
-                          'Success',
+                          widget.type == 'error' ? 'Error' : 'Success',
                           weight: FontWeight.bold,
                           color: Colors.white,
                           size: 20,
@@ -99,7 +104,8 @@ class _AlertWidget extends State<AlertWidget>
   }
 }
 
-void showCustomAlert(BuildContext context, {required String message}) {
+void showCustomAlert(BuildContext context,
+    {required String message, required String type}) {
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -110,7 +116,7 @@ void showCustomAlert(BuildContext context, {required String message}) {
           top: 0,
           right: 0,
           left: 0,
-          child: AlertWidget(message: message),
+          child: AlertWidget(message: message, type: type),
         ),
       ]);
     },

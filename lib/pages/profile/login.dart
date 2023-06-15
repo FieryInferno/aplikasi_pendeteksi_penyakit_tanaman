@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/alert_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -86,8 +87,9 @@ class _Login extends State<Login> {
                         },
                       );
 
+                      final body = jsonDecode(response.body);
+
                       if (response.statusCode == 200) {
-                        final body = jsonDecode(response.body);
                         final SharedPreferences preferences =
                             await SharedPreferences.getInstance();
 
@@ -99,6 +101,13 @@ class _Login extends State<Login> {
                             .setMenu('home');
                         // ignore: use_build_context_synchronously
                         Helpers().redirectPage(context, Home());
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        showCustomAlert(
+                          context,
+                          message: body['message']['user'],
+                          type: 'error',
+                        );
                       }
 
                       setState(() => _loading = false);
