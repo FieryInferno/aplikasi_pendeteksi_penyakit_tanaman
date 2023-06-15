@@ -58,7 +58,10 @@ class _Register extends State<Register> {
 
         Future.delayed(
           const Duration(milliseconds: 150),
-          () => showCustomAlert(context),
+          () => showCustomAlert(
+            context,
+            message: 'Register berhasil, silahkan melakukan login',
+          ),
         );
       }
 

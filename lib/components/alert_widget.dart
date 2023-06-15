@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'text_widget.dart';
 
 class AlertWidget extends StatefulWidget {
-  const AlertWidget({super.key});
+  final String message;
+
+  const AlertWidget({super.key, required this.message});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -81,8 +83,8 @@ class _AlertWidget extends State<AlertWidget>
                       ],
                     ),
                     const SizedBox(height: 10),
-                    const TextWidget(
-                      'Register berhasil, silahkan melakukan login',
+                    TextWidget(
+                      widget.message,
                       color: Colors.white,
                       size: 15,
                     ),
@@ -97,14 +99,19 @@ class _AlertWidget extends State<AlertWidget>
   }
 }
 
-void showCustomAlert(BuildContext context) {
+void showCustomAlert(BuildContext context, {required String message}) {
   showDialog(
     context: context,
     barrierDismissible: false,
     barrierColor: Colors.white.withOpacity(0.0),
     builder: (BuildContext context) {
-      return Stack(children: const [
-        Positioned(top: 0, right: 0, left: 0, child: AlertWidget()),
+      return Stack(children: [
+        Positioned(
+          top: 0,
+          right: 0,
+          left: 0,
+          child: AlertWidget(message: message),
+        ),
       ]);
     },
   );
