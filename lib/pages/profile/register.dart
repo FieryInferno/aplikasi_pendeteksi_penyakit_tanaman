@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,6 +21,7 @@ class Register extends StatefulWidget {
 
 class _Register extends State<Register> {
   File? fotoProfile;
+  String? errorPhoneNumber;
   late bool _isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -48,7 +50,7 @@ class _Register extends State<Register> {
             .add(await http.MultipartFile.fromPath('image', fotoProfile!.path));
       }
 
-      var response = await formData.send();
+      http.StreamedResponse response = await formData.send();
 
       setState(() => _isLoading = false);
 
@@ -63,6 +65,9 @@ class _Register extends State<Register> {
             message: 'Register berhasil, silahkan melakukan login',
           ),
         );
+      } else {
+        Map body = jsonDecode(await response.stream.bytesToString());
+        setState(() => errorPhoneNumber = body['message']['phone_number']);
       }
 
       setState(() => _isLoading = false);
@@ -146,6 +151,7 @@ class _Register extends State<Register> {
                           ? 'Nomor telepon tidak boleh kosong'
                           : null,
                       controller: _phoneNumberController,
+                      errorText: errorPhoneNumber,
                     ),
                     const SizedBox(height: 10),
                     InputWidget(

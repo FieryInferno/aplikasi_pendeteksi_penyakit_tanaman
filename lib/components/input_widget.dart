@@ -8,6 +8,7 @@ class InputWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController _controller;
   final bool? disabled;
+  final String? errorText;
 
   InputWidget({
     super.key,
@@ -15,8 +16,9 @@ class InputWidget extends StatelessWidget {
     this.password,
     this.onChanged,
     this.validator,
-    value,
+    this.errorText,
     this.disabled,
+    value,
     TextEditingController? controller,
   }) : _controller = controller ?? TextEditingController() {
     if (value != null) _controller.text = value;
@@ -51,6 +53,7 @@ class InputWidget extends StatelessWidget {
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
+              errorText: errorText,
             ),
             onChanged: onChanged,
             validator: validator,
