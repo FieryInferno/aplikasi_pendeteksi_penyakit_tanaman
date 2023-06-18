@@ -17,7 +17,10 @@ class BlogList extends StatelessWidget {
       child: ListView.separated(
         itemBuilder: (context, index) => ClickWidget(
           destination: BlogDetail(_blogs[index]),
-          child: BlogItem(blog: _blogs[index]),
+          child: BlogItem(
+            blog: _blogs[index],
+            index: index,
+          ),
         ),
         separatorBuilder: (context, index) => const SizedBox(height: 5),
         itemCount: _blogs.length,
