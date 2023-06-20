@@ -6,18 +6,19 @@ class BlogItem extends StatefulWidget {
   final Map<String, String> blog;
   final int index;
 
-  const BlogItem({super.key, required this.blog, required this.index});
+  const BlogItem({Key? key, required this.blog, required this.index})
+      : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _BlogItem createState() => _BlogItem();
+  _BlogItemState createState() => _BlogItemState();
 }
 
-class _BlogItem extends State<BlogItem> with TickerProviderStateMixin {
-  AnimationController? _animationController;
-  AnimationController? _animationSlideController;
-  Animation<double>? _opacityAnimation;
-  Animation<Offset>? _slideAnimation;
+class _BlogItemState extends State<BlogItem> with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late AnimationController _animationSlideController;
+  late Animation<double> _opacityAnimation;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
@@ -32,17 +33,19 @@ class _BlogItem extends State<BlogItem> with TickerProviderStateMixin {
       vsync: this,
     );
     _opacityAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController!);
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _slideAnimation = Tween<Offset>(
-            begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0))
-        .animate(_animationSlideController!);
-    _animationController!.forward();
-    _animationSlideController!.forward();
+      begin: const Offset(1.0, 0.0),
+      end: const Offset(0.0, 0.0),
+    ).animate(_animationSlideController);
+    _animationController.forward();
+    _animationSlideController.forward();
   }
 
   @override
   void dispose() {
-    _animationController!.dispose();
+    _animationController.dispose();
+    _animationSlideController.dispose();
     super.dispose();
   }
 
@@ -50,18 +53,22 @@ class _BlogItem extends State<BlogItem> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return VisibilityDetector(
       key: Key('animasi_blog${widget.index}'),
-      onVisibilityChanged: (info) {
-        _animationController!.animateTo(info.visibleFraction);
-        _animationSlideController!.animateTo(
-            info.visibleFraction > 0.25 ? 1.0 : info.visibleFraction);
+      onVisibilityChanged: (VisibilityInfo info) {
+        _animationController.animateTo(info.visibleFraction,
+            curve: Curves.easeOut, duration: const Duration(milliseconds: 300));
+        _animationSlideController.animateTo(
+          info.visibleFraction > 0.25 ? 1.0 : 0.0,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 600),
+        );
       },
       child: SlideTransition(
-        position: _slideAnimation!,
+        position: _slideAnimation,
         child: AnimatedBuilder(
-          animation: _animationController!,
+          animation: _animationController,
           builder: (BuildContext context, Widget? child) {
             return Opacity(
-              opacity: _opacityAnimation!.value,
+              opacity: _opacityAnimation.value,
               child: Card(
                 elevation: 5,
                 child: Padding(

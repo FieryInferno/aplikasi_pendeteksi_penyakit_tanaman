@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '/components/riwayat_list_item.dart';
-import '/components/title_widget.dart';
-import '/components/click_widget.dart';
-import '/data/riwayat.dart';
-import '/pages/result.dart';
+import '../components/page_wrap.dart';
+import '../components/riwayat_list_item.dart';
+import '../components/click_widget.dart';
+import '../data/riwayat.dart';
+import '../pages/result.dart';
 
 class RiwayatList extends StatelessWidget {
   final List<Map<String, String>> _riwayatList = Riwayat().list;
@@ -12,46 +12,18 @@ class RiwayatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          color: const Color(0xFFE7F0EB),
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 20,
+    return PageWrapper(
+      'Blog',
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemBuilder: (context, index) => ClickWidget(
+          destination: Result(
+            riwayat: _riwayatList[index],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(
-                      Icons.keyboard_arrow_left,
-                      size: 40,
-                      color: Color(0xFF116531),
-                    ),
-                  ),
-                  const TitleWidget(title: 'Riwayat')
-                ],
-              ),
-              const SizedBox(height: 10),
-              ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (context, index) => ClickWidget(
-                  destination: Result(
-                    riwayat: _riwayatList[index],
-                  ),
-                  child: RiwayatListItem(data: _riwayatList[index]),
-                ),
-                separatorBuilder: (context, index) => const SizedBox(height: 5),
-                itemCount: _riwayatList.length,
-              ),
-            ],
-          ),
+          child: RiwayatListItem(data: _riwayatList[index]),
         ),
+        separatorBuilder: (context, index) => const SizedBox(height: 5),
+        itemCount: _riwayatList.length,
       ),
     );
   }

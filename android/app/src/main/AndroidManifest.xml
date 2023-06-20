@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.aplikasi_pendeteksi_penyakit_tanaman">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="aplikasi_pendeteksi_penyakit_tanaman"
         android:name="${applicationName}"

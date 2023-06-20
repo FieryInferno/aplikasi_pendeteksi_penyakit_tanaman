@@ -151,6 +151,7 @@ class Home extends StatelessWidget {
               itemBuilder: (context, index) => ClickWidget(
                 destination: BlogDetail(_blogs[index]),
                 child: BlogItem(
+                  key: Key('BlogItem$index'),
                   blog: _blogs[index],
                   index: index,
                 ),
