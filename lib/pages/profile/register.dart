@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import '../../constants.dart';
 import '../../helpers.dart';
 import '../../pages/profile/login.dart';
 import '../../components/loading.dart';
@@ -34,9 +35,7 @@ class _Register extends State<Register> {
 
       var formData = http.MultipartRequest(
         'POST',
-        Uri.parse(
-          'https://toko-dizital.et.r.appspot.com/api/v1/auth/register/',
-        ),
+        Uri.parse('${Constants.url}auth/register/'),
       );
 
       formData.fields.addAll({

@@ -1,8 +1,10 @@
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/text_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_view.dart';
+import '../../model/user_model.dart';
 import '../../pages/profile/edit_profile.dart';
 import '../../components/page_wrap.dart';
 import '../../components/input_widget.dart';
@@ -44,16 +46,22 @@ class Profile extends StatelessWidget {
                   ),
                 ),
                 Image.asset('assets/images/foto-profile.png'),
-                InputWidget(
-                  label: 'Nama',
-                  value: 'M. Bagas Setia',
-                  disabled: true,
-                ),
-                InputWidget(
-                  label: 'Nomor Telepon',
-                  value: '083895358071',
-                  disabled: true,
-                ),
+                Consumer<UserModel>(
+                  builder: (context, value, child) => Column(
+                    children: [
+                      InputWidget(
+                        label: 'Nama',
+                        value: value.user?['name'],
+                        disabled: true,
+                      ),
+                      InputWidget(
+                        label: 'Nomor Telepon',
+                        value: value.user?['phone_number'],
+                        disabled: true,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

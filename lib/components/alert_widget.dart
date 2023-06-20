@@ -108,7 +108,6 @@ void showCustomAlert(BuildContext context,
     {required String message, required String type}) {
   showDialog(
     context: context,
-    barrierDismissible: false,
     barrierColor: Colors.white.withOpacity(0.0),
     builder: (BuildContext context) {
       return Stack(children: [

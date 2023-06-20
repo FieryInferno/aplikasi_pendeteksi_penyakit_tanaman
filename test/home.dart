@@ -1,4 +1,4 @@
-import 'package:aplikasi_pendeteksi_penyakit_tanaman/menu_model.dart';
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/model/menu_model.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

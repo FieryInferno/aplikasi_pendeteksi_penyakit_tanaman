@@ -6,12 +6,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '/menu_model.dart';
 import '../home.dart';
-import '/helpers.dart';
-import '/components/input_widget.dart';
-import '/components/primary_button.dart';
-import '/components/title_widget.dart';
+import '../../constants.dart';
+
+import '../../model/menu_model.dart';
+import '../../model/user_model.dart';
+import '../../helpers.dart';
+import '../../components/input_widget.dart';
+import '../../components/primary_button.dart';
+import '../../components/title_widget.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -77,10 +80,7 @@ class _Login extends State<Login> {
                       setState(() => _loading = true);
 
                       var response = await http.post(
-                        Uri.https(
-                          'toko-dizital.et.r.appspot.com',
-                          '/api/v1/auth/login/',
-                        ),
+                        Constants.url['login']!,
                         body: {
                           'phone_number': _phoneNumberController.text.trim(),
                           'password': _passwordController.text.trim(),
@@ -92,13 +92,20 @@ class _Login extends State<Login> {
                       if (response.statusCode == 200) {
                         final SharedPreferences preferences =
                             await SharedPreferences.getInstance();
+                        final bearerToken = body['data']['token'];
+                        final responseAuthUser = await http.get(
+                          Constants.url['getAuth']!,
+                          headers: {'Authorization': 'Bearer $bearerToken'},
+                        );
+                        final bodyAuthUser = jsonDecode(responseAuthUser.body);
 
-                        await preferences.setString(
-                            'token', body['data']['token']);
-
+                        await preferences.setString('token', bearerToken);
                         // ignore: use_build_context_synchronously
                         Provider.of<MenuModel>(context, listen: false)
                             .setMenu('home');
+                        // ignore: use_build_context_synchronously
+                        Provider.of<UserModel>(context, listen: false).user =
+                            bodyAuthUser['data'];
                         // ignore: use_build_context_synchronously
                         Helpers().redirectPage(context, Home());
                       } else {

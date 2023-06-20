@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '/helpers.dart';
 import '../home.dart';
-import '/menu_model.dart';
-import '/components/input_widget.dart';
-import '/components/primary_button.dart';
-import '/components/page_wrap.dart';
-import '/components/loading.dart';
+import '../../helpers.dart';
+import '../../constants.dart';
+import '../../model/menu_model.dart';
+import '../../components/input_widget.dart';
+import '../../components/primary_button.dart';
+import '../../components/page_wrap.dart';
+import '../../components/loading.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -57,10 +58,7 @@ class _EditProfile extends State<EditProfile> {
                     await SharedPreferences.getInstance();
 
                 var response = await http.put(
-                  Uri.https(
-                    'toko-dizital.et.r.appspot.com',
-                    '/api/v1/auth/edit-profile/',
-                  ),
+                  Constants.url['editProfile']!,
                   headers: {
                     "Authorization": "Bearer ${preferences.getString('token')}",
                   },
