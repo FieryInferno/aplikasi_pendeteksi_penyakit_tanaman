@@ -11,6 +11,7 @@ import '../../components/title_widget.dart';
 import '../../components/input_widget.dart';
 import '../../components/primary_button.dart';
 import '../../components/alert_widget.dart';
+import '../../components/foto_profile_widget.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -108,24 +109,10 @@ class _Register extends State<Register> {
                   children: [
                     Center(
                       child: InkWell(
-                        child: ClipOval(
-                          child: fotoProfile != null
-                              ? Image.file(
-                                  fotoProfile!,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.24,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  'assets/images/user.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.24,
-                                  fit: BoxFit.cover,
-                                ),
+                        child: FotoProfileWidget(
+                          type: fotoProfile != null ? 'file' : 'asset',
+                          file: fotoProfile,
+                          asset: 'assets/images/user.png',
                         ),
                         onTap: () {
                           Helpers helpers = Helpers();

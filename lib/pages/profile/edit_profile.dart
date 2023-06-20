@@ -7,10 +7,12 @@ import '../home.dart';
 import '../../helpers.dart';
 import '../../constants.dart';
 import '../../model/menu_model.dart';
+import '../../model/user_model.dart';
 import '../../components/input_widget.dart';
 import '../../components/primary_button.dart';
 import '../../components/page_wrap.dart';
 import '../../components/loading.dart';
+import '../../components/foto_profile_widget.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -38,16 +40,25 @@ class _EditProfile extends State<EditProfile> {
               Expanded(
                 child: Column(
                   children: [
-                    Image.asset('assets/images/foto-profile.png'),
-                    InputWidget(
-                      label: 'Nama',
-                      value: 'M. Bagas Setia',
-                      controller: _namaController,
-                    ),
-                    InputWidget(
-                      label: 'Nomor Telepon',
-                      value: '083895358071',
-                      controller: _phoneNumberController,
+                    Consumer<UserModel>(
+                      builder: (context, value, child) => Column(
+                        children: [
+                          FotoProfileWidget(
+                            type: 'network',
+                            url: value.user?['image'],
+                          ),
+                          InputWidget(
+                            label: 'Nama',
+                            value: value.user?['name'],
+                            controller: _namaController,
+                          ),
+                          InputWidget(
+                            label: 'Nomor Telepon',
+                            value: value.user?['phone_number'],
+                            controller: _phoneNumberController,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

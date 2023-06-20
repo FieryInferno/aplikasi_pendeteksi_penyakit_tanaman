@@ -10,6 +10,7 @@ import '../../components/page_wrap.dart';
 import '../../components/input_widget.dart';
 import '../../components/primary_button.dart';
 import '../../components/alert_widget.dart';
+import '../../components/foto_profile_widget.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -45,10 +46,13 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Image.asset('assets/images/foto-profile.png'),
                 Consumer<UserModel>(
                   builder: (context, value, child) => Column(
                     children: [
+                      FotoProfileWidget(
+                        type: 'network',
+                        url: value.user?['image'],
+                      ),
                       InputWidget(
                         label: 'Nama',
                         value: value.user?['name'],
