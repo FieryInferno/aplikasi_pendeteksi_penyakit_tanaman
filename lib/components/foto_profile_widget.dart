@@ -6,6 +6,7 @@ class FotoProfileWidget extends StatelessWidget {
   final String? asset;
   final String? url;
   final File? file;
+  final void Function()? onTap;
 
   const FotoProfileWidget({
     super.key,
@@ -13,6 +14,7 @@ class FotoProfileWidget extends StatelessWidget {
     this.file,
     this.asset,
     this.url,
+    this.onTap,
   });
 
   @override
@@ -48,6 +50,6 @@ class FotoProfileWidget extends StatelessWidget {
       }
     }
 
-    return ClipOval(child: generateChild());
+    return InkWell(onTap: onTap, child: ClipOval(child: generateChild()));
   }
 }

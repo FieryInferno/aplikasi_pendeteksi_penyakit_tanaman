@@ -108,12 +108,10 @@ class _Register extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: InkWell(
-                        child: FotoProfileWidget(
-                          type: fotoProfile != null ? 'file' : 'asset',
-                          file: fotoProfile,
-                          asset: 'assets/images/user.png',
-                        ),
+                      child: FotoProfileWidget(
+                        type: fotoProfile != null ? 'file' : 'asset',
+                        file: fotoProfile,
+                        asset: 'assets/images/user.png',
                         onTap: () {
                           Helpers helpers = Helpers();
                           helpers.showModalImage(context, () async {

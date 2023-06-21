@@ -1,12 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../home.dart';
+import '../../components/alert_widget.dart';
 import '../../helpers.dart';
 import '../../constants.dart';
-import '../../model/menu_model.dart';
 import '../../model/user_model.dart';
 import '../../components/input_widget.dart';
 import '../../components/primary_button.dart';
@@ -27,6 +29,54 @@ class _EditProfile extends State<EditProfile> {
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   late bool _isLoading = false;
+  File? fotoProfile;
+  String? errorPhoneNumber;
+
+  void _submitForm(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isLoading = true);
+
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      final formData = http.MultipartRequest(
+        'PUT',
+        Constants.url['editProfile']!,
+      );
+
+      formData.headers['Authorization'] =
+          'Bearer ${preferences.getString('token')}';
+      formData.fields.addAll({
+        'name': _namaController.text.trim(),
+        'phone_number': _phoneNumberController.text.trim(),
+      });
+
+      if (fotoProfile != null) {
+        formData.files
+            .add(await http.MultipartFile.fromPath('image', fotoProfile!.path));
+      }
+
+      http.StreamedResponse response = await formData.send();
+      Map body = jsonDecode(await response.stream.bytesToString());
+
+      setState(() => _isLoading = false);
+
+      if (response.statusCode == 200) {
+        // ignore: use_build_context_synchronously
+        Provider.of<UserModel>(context, listen: false).user = body['data'];
+        Future.delayed(
+          const Duration(milliseconds: 150),
+          () => showCustomAlert(
+            context,
+            message: 'Edit profile berhasil',
+            type: 'success',
+          ),
+        );
+      } else {
+        setState(() => errorPhoneNumber = body['message']['phone_number']);
+      }
+
+      setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +94,35 @@ class _EditProfile extends State<EditProfile> {
                       builder: (context, value, child) => Column(
                         children: [
                           FotoProfileWidget(
-                            type: 'network',
+                            type: fotoProfile != null ? 'file' : 'network',
+                            file: fotoProfile,
                             url: value.user?['image'],
+                            onTap: () {
+                              Helpers helpers = Helpers();
+                              helpers.showModalImage(context, () async {
+                                XFile pickedFile =
+                                    await Helpers().getImage(context) as XFile;
+
+                                setState(
+                                    () => fotoProfile = File(pickedFile.path));
+                              });
+                            },
                           ),
                           InputWidget(
                             label: 'Nama',
                             value: value.user?['name'],
                             controller: _namaController,
+                            validator: (value) => value!.isEmpty
+                                ? 'Nama tidak boleh kosong'
+                                : null,
                           ),
                           InputWidget(
                             label: 'Nomor Telepon',
                             value: value.user?['phone_number'],
                             controller: _phoneNumberController,
+                            validator: (value) => value!.isEmpty
+                                ? 'Nomor telepon tidak boleh kosong'
+                                : null,
                           ),
                         ],
                       ),
@@ -63,39 +130,7 @@ class _EditProfile extends State<EditProfile> {
                   ],
                 ),
               ),
-              PrimaryButton('Simpan', onTap: () async {
-                setState(() => _isLoading = true);
-                SharedPreferences preferences =
-                    await SharedPreferences.getInstance();
-
-                var response = await http.put(
-                  Constants.url['editProfile']!,
-                  headers: {
-                    "Authorization": "Bearer ${preferences.getString('token')}",
-                  },
-                  body: {
-                    "name": _namaController.text,
-                    "phone_number": _phoneNumberController.text,
-                  },
-                );
-
-                setState(() => _isLoading = false);
-
-                if (response.statusCode == 401) {
-                  preferences.remove('token');
-                  // ignore: use_build_context_synchronously
-                  Provider.of<MenuModel>(context, listen: false)
-                      .setMenu('home');
-                  // ignore: use_build_context_synchronously
-                  Helpers().redirectPage(
-                    context,
-                    Home(),
-                  );
-                } else {
-                  // ignore: use_build_context_synchronously
-                  Navigator.pop(context);
-                }
-              }),
+              PrimaryButton('Simpan', onTap: () => _submitForm(context)),
             ],
           ),
         ),
