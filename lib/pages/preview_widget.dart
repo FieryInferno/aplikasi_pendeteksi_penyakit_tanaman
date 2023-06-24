@@ -1,8 +1,11 @@
-import '../helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dart:ui';
 import 'dart:io';
+import 'dart:convert';
+import '../helpers.dart';
+import '../constants.dart';
 import '../pages/result.dart';
 import '../components/primary_button.dart';
 import '../components/back_button.dart';
@@ -19,6 +22,26 @@ class PreviewWidget extends StatefulWidget {
 
 class _PreviewWidget extends State<PreviewWidget> {
   bool _loading = false;
+
+  Future<bool> detectDisease() async {
+    var formData = http.MultipartRequest(
+      'POST',
+      Constants.url['detectDisease']!,
+    );
+
+    formData.files
+        .add(await http.MultipartFile.fromPath('image', widget.image!.path));
+
+    http.StreamedResponse response = await formData.send();
+    Map body = jsonDecode(await response.stream.bytesToString());
+    print(body);
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +95,8 @@ class _PreviewWidget extends State<PreviewWidget> {
     if (_loading) {
       listWidget.add(
         FutureBuilder(
-          future: Future.delayed(const Duration(seconds: 5)),
-          builder: (context, snapshot) {
+          future: detectDisease(),
+          builder: (context, AsyncSnapshot<bool> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Stack(
                 children: [
