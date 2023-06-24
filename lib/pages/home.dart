@@ -2,10 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../components/riwayat_item.dart';
+import './preview_widget.dart';
+import './result.dart';
 import '../helpers.dart';
-import 'preview_widget.dart';
-import 'result.dart';
 import '../data/blogs.dart';
 import '../data/riwayat.dart';
 import '../pages/riwayat_list.dart';
@@ -15,6 +14,7 @@ import '../components/blog_item.dart';
 import '../components/text_widget.dart';
 import '../components/click_widget.dart';
 import '../components/page_wrap.dart';
+import '../components/riwayat_item.dart';
 
 class Home extends StatelessWidget {
   final List<Map<String, String>> _blogs = Blogs().list;
@@ -60,8 +60,7 @@ class Home extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Helpers helpers = Helpers();
-              helpers.showModalImage(context, () async {
+              Helpers.showModalImage(context, () async {
                 XFile pickedFile = await Helpers().getImage(context) as XFile;
 
                 // ignore: use_build_context_synchronously

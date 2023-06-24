@@ -98,8 +98,7 @@ class _EditProfile extends State<EditProfile> {
                             file: fotoProfile,
                             url: value.user?['image'],
                             onTap: () {
-                              Helpers helpers = Helpers();
-                              helpers.showModalImage(context, () async {
+                              Helpers.showModalImage(context, () async {
                                 XFile pickedFile =
                                     await Helpers().getImage(context) as XFile;
 

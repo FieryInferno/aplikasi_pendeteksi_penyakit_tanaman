@@ -113,8 +113,7 @@ class _Register extends State<Register> {
                         file: fotoProfile,
                         asset: 'assets/images/user.png',
                         onTap: () {
-                          Helpers helpers = Helpers();
-                          helpers.showModalImage(context, () async {
+                          Helpers.showModalImage(context, () async {
                             XFile pickedFile =
                                 await Helpers().getImage(context) as XFile;
 

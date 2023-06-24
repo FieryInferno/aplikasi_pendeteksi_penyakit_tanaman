@@ -22,7 +22,7 @@ class Helpers {
     );
   }
 
-  Future<dynamic> showModalImage(context, onTap) {
+  static Future<dynamic> showModalImage(context, onTap) {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
