@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/alert_widget.dart';
@@ -98,13 +97,7 @@ class _EditProfile extends State<EditProfile> {
                             file: fotoProfile,
                             url: value.user?['image'],
                             onTap: () {
-                              Helpers.showModalImage(context, () async {
-                                XFile pickedFile =
-                                    await Helpers().getImage(context) as XFile;
-
-                                setState(
-                                    () => fotoProfile = File(pickedFile.path));
-                              });
+                              Helpers.showModalImage(context);
                             },
                           ),
                           InputWidget(

@@ -98,7 +98,7 @@ class _PreviewWidget extends State<PreviewWidget> {
                 ),
                 PrimaryButton(
                   'Ambil Ulang',
-                  onTap: () => Helpers().getImage(context),
+                  onTap: () => Helpers().getImage(),
                 ),
               ],
             ),

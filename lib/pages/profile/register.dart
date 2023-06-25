@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import '../../constants.dart';
 import '../../helpers.dart';
@@ -113,12 +112,7 @@ class _Register extends State<Register> {
                         file: fotoProfile,
                         asset: 'assets/images/user.png',
                         onTap: () {
-                          Helpers.showModalImage(context, () async {
-                            XFile pickedFile =
-                                await Helpers().getImage(context) as XFile;
-
-                            setState(() => fotoProfile = File(pickedFile.path));
-                          });
+                          Helpers.showModalImage(context);
                         },
                       ),
                     ),

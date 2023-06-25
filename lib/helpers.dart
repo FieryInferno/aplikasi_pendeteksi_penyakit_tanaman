@@ -1,18 +1,19 @@
+import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import './pages/preview_widget.dart';
 
 class Helpers {
   final picker = ImagePicker();
 
-  Future<XFile?> getImage(context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+  Future<XFile?> getImage({bool? gallery}) async {
+    ImageSource source = ImageSource.camera;
+
+    if (gallery != null) source = ImageSource.gallery;
+
+    final pickedFile = await picker.pickImage(source: source);
 
     return pickedFile;
-  }
-
-  Future getImageByGaleri() async {
-    // ignore: unused_local_variable
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
   }
 
   static void redirectPage(context, Widget destination) {
@@ -22,7 +23,7 @@ class Helpers {
     );
   }
 
-  static Future<dynamic> showModalImage(context, onTap) {
+  static Future<dynamic> showModalImage(context) {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -34,7 +35,15 @@ class Helpers {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: onTap,
+                    onTap: () async {
+                      XFile pickedFile = await Helpers().getImage() as XFile;
+
+                      // ignore: use_build_context_synchronously
+                      Helpers.redirectPage(
+                        context,
+                        PreviewWidget(File(pickedFile.path)),
+                      );
+                    },
                     child: Row(
                       children: const [
                         Icon(Icons.photo_camera),
@@ -46,7 +55,16 @@ class Helpers {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => Helpers().getImageByGaleri(),
+                    onTap: () async {
+                      XFile pickedFile =
+                          await Helpers().getImage(gallery: true) as XFile;
+
+                      // ignore: use_build_context_synchronously
+                      Helpers.redirectPage(
+                        context,
+                        PreviewWidget(File(pickedFile.path)),
+                      );
+                    },
                     child: Row(
                       children: const [
                         Icon(Icons.image),
