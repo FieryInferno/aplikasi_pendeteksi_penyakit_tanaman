@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
 import 'dart:io';
 import 'dart:convert';
@@ -25,11 +26,15 @@ class _PreviewWidget extends State<PreviewWidget> {
 
   void _detectDisease() async {
     setState(() => _loading = true);
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final String? token = preferences.getString('token');
     var formData = http.MultipartRequest(
       'POST',
       Constants.url['detectDisease']!,
     );
 
+    if (token != null) formData.headers['Authorization'] = token;
     formData.files
         .add(await http.MultipartFile.fromPath('image', widget.image!.path));
 
