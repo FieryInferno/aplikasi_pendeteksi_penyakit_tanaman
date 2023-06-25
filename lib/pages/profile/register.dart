@@ -56,7 +56,7 @@ class _Register extends State<Register> {
 
       if (response.statusCode == 200) {
         // ignore: use_build_context_synchronously
-        Helpers().redirectPage(context, const Login());
+        Helpers.redirectPage(context, const Login());
 
         Future.delayed(
           const Duration(milliseconds: 150),

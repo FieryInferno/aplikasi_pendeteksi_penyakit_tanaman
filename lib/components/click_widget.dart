@@ -14,7 +14,7 @@ class ClickWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Helpers().redirectPage(context, destination),
+      onTap: () => Helpers.redirectPage(context, destination),
       child: child,
     );
   }

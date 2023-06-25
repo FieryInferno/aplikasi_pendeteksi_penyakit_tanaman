@@ -19,48 +19,63 @@ class RekomendasiProdukItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          child: Image.asset(
-            'assets/images/${rekomendasiProduk['image']}',
-            fit: BoxFit.cover,
-            height: 150,
-            width: 150,
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(
-            left: 10,
-            bottom: 10,
-          ),
-          width: 150,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromARGB(255, 221, 220, 220),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(3, 3),
+    return Container(
+      width: 150,
+      margin: const EdgeInsets.only(bottom: 5.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: SizedBox(
+              child: Image.network(
+                rekomendasiProduk['image'],
+                fit: BoxFit.cover,
               ),
-            ],
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextWidget(rekomendasiProduk['nama_produk'],
-                  weight: FontWeight.bold),
-              TextWidget(formatRupiah(rekomendasiProduk['harga'])),
-            ],
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.only(left: 10, bottom: 10),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromARGB(255, 221, 220, 220),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(3, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Flexible(
+                    flex: 0,
+                    child: TextWidget(
+                      rekomendasiProduk['title'],
+                      weight: FontWeight.bold,
+                    ),
+                  ),
+                  Flexible(
+                    child: TextWidget(
+                      formatRupiah(
+                        rekomendasiProduk['price'],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

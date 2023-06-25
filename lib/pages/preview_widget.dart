@@ -23,7 +23,8 @@ class PreviewWidget extends StatefulWidget {
 class _PreviewWidget extends State<PreviewWidget> {
   bool _loading = false;
 
-  Future<bool> detectDisease() async {
+  void _detectDisease() async {
+    setState(() => _loading = true);
     var formData = http.MultipartRequest(
       'POST',
       Constants.url['detectDisease']!,
@@ -33,14 +34,28 @@ class _PreviewWidget extends State<PreviewWidget> {
         .add(await http.MultipartFile.fromPath('image', widget.image!.path));
 
     http.StreamedResponse response = await formData.send();
-    Map body = jsonDecode(await response.stream.bytesToString());
-    print(body);
 
-    if (response.statusCode == 200) {
-      return true;
+    if (response.statusCode == 201) {
+      Map body = jsonDecode(await response.stream.bytesToString());
+      Map data = body['data'];
+      Map disease = data['disease'];
+
+      // ignore: use_build_context_synchronously
+      Helpers.redirectPage(
+        context,
+        Result(
+          imagePath: data['image'],
+          imageFile: widget.image,
+          namaPenyakit: disease['name'],
+          timestamp: data['timestamp'],
+          description: disease['description'],
+          solution: disease['solution'],
+          rekomendasiProduk: disease['products'],
+        ),
+      );
     }
 
-    return false;
+    setState(() => _loading = false);
   }
 
   @override
@@ -79,7 +94,7 @@ class _PreviewWidget extends State<PreviewWidget> {
               children: [
                 PrimaryButton(
                   'Unggah Gambar',
-                  onTap: () => setState(() => _loading = true),
+                  onTap: _detectDisease,
                 ),
                 PrimaryButton(
                   'Ambil Ulang',
@@ -93,59 +108,46 @@ class _PreviewWidget extends State<PreviewWidget> {
     ];
 
     if (_loading) {
-      listWidget.add(
-        FutureBuilder(
-          future: detectDisease(),
-          builder: (context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Stack(
-                children: [
-                  BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.1),
-                      ),
-                    ),
+      listWidget.addAll([
+        BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.1),
+            ),
+          ),
+        ),
+        Center(
+          child: SizedBox(
+            height: 160,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              child: Column(
+                children: const [
+                  CupertinoActivityIndicator(
+                    color: Color(0xFF116531),
+                    radius: 40,
                   ),
-                  Center(
-                    child: SizedBox(
-                      height: 160,
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          children: const [
-                            CupertinoActivityIndicator(
-                              color: Color(0xFF116531),
-                              radius: 40,
-                            ),
-                            SizedBox(height: 15),
-                            Text(
-                              'Sedang Diproses',
-                              style: TextStyle(
-                                fontFamily: 'Quicksand',
-                                fontSize: 16,
-                                color: Color(0xFF116531),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                  SizedBox(height: 15),
+                  Text(
+                    'Sedang Diproses',
+                    style: TextStyle(
+                      fontFamily: 'Quicksand',
+                      fontSize: 16,
+                      color: Color(0xFF116531),
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
-              );
-            } else {
-              return const Result();
-            }
-          },
+              ),
+            ),
+          ),
         ),
-      );
+      ]);
     }
 
     return Scaffold(

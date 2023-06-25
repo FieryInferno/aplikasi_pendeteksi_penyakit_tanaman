@@ -23,7 +23,7 @@ class MenuButton extends StatelessWidget {
           onPressed: () {
             if (value.currentMenu != menu) {
               Provider.of<MenuModel>(context, listen: false).setMenu(menu);
-              Helpers().redirectPage(context, destination);
+              Helpers.redirectPage(context, destination);
             }
           },
           icon: Icon(

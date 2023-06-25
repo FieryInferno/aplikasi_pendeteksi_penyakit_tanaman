@@ -27,7 +27,7 @@ class Profile extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () => Helpers().redirectPage(
+                    onPressed: () => Helpers.redirectPage(
                       context,
                       const EditProfile(),
                     ),
@@ -75,7 +75,7 @@ class Profile extends StatelessWidget {
 
             preferences.clear();
             // ignore: use_build_context_synchronously
-            Helpers().redirectPage(context, const AuthView());
+            Helpers.redirectPage(context, const AuthView());
 
             Future.delayed(
               const Duration(milliseconds: 150),

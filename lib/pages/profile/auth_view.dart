@@ -47,12 +47,12 @@ class AuthView extends StatelessWidget {
                   PrimaryButton(
                     'Daftar',
                     onTap: () =>
-                        Helpers().redirectPage(context, const Register()),
+                        Helpers.redirectPage(context, const Register()),
                   ),
                   const SizedBox(height: 10),
                   PrimaryButton(
                     'Masuk',
-                    onTap: () => Helpers().redirectPage(context, const Login()),
+                    onTap: () => Helpers.redirectPage(context, const Login()),
                   ),
                 ]),
               ),

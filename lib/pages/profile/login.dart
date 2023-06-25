@@ -107,7 +107,7 @@ class _Login extends State<Login> {
                         Provider.of<UserModel>(context, listen: false).user =
                             bodyAuthUser['data'];
                         // ignore: use_build_context_synchronously
-                        Helpers().redirectPage(context, Home());
+                        Helpers.redirectPage(context, Home());
                       } else {
                         // ignore: use_build_context_synchronously
                         showCustomAlert(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RiwayatItem extends StatelessWidget {
-  final Map<String, String> riwayat;
+  final Map<String, dynamic> riwayat;
 
   const RiwayatItem({super.key, required this.riwayat});
 

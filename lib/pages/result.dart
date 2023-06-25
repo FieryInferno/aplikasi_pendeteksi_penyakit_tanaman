@@ -1,5 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import '/data/rekomendasi_produk.dart';
+import 'package:intl/intl.dart';
 import '/components/back_button.dart';
 import '/components/title_widget.dart';
 import '/components/text_widget.dart';
@@ -7,8 +8,25 @@ import '/components/rekomendasi_produk_item.dart';
 
 class Result extends StatefulWidget {
   final Map<String, String>? riwayat;
+  final File? imageFile;
+  final String? imagePath;
+  final String namaPenyakit;
+  final String timestamp;
+  final String description;
+  final String solution;
+  final List<dynamic> rekomendasiProduk;
 
-  const Result({super.key, this.riwayat});
+  const Result({
+    super.key,
+    this.riwayat,
+    this.imageFile,
+    this.imagePath,
+    required this.namaPenyakit,
+    required this.timestamp,
+    required this.description,
+    required this.solution,
+    required this.rekomendasiProduk,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -16,8 +34,6 @@ class Result extends StatefulWidget {
 }
 
 class _Result extends State<Result> {
-  final List<Map<String, dynamic>> _rekomendasiProduk =
-      RekomendasiProduk().list;
   bool _displayFull = false;
 
   @override
@@ -33,9 +49,9 @@ class _Result extends State<Result> {
               top: 0,
               right: 0,
               left: 0,
-              child: Image.asset(
-                  'assets/images/${widget.riwayat != null ? widget.riwayat!['image'] : 'blog-1.jpg'}',
-                  fit: BoxFit.cover),
+              child: widget.imageFile != null
+                  ? Image.file(widget.imageFile!, fit: BoxFit.cover)
+                  : Image.asset(widget.imagePath!, fit: BoxFit.cover),
             ),
             const Positioned(top: 10, left: 10, child: BackButtonWidget()),
             AnimatedPositioned(
@@ -64,26 +80,19 @@ class _Result extends State<Result> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleWidget(
-                            title: (widget.riwayat != null
-                                    ? widget.riwayat!['nama_penyakit']
-                                    : 'Nama Penyakit')
-                                .toString(),
+                            title: (widget.namaPenyakit).toString(),
                           ),
                           Row(
                             children: [
                               const Icon(Icons.schedule),
                               const SizedBox(width: 5),
-                              TextWidget(
-                                (widget.riwayat != null
-                                        ? widget.riwayat!['tanggal']
-                                        : '4 Mei 2023, 09:00')
-                                    .toString(),
-                              ),
+                              TextWidget(DateFormat('dd MMMM yyyy, HH:mm')
+                                  .format(DateTime.parse(widget.timestamp))),
                             ],
                           ),
                           const SizedBox(height: 10),
-                          const TextWidget(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum pulvinar aliquet. Mauris molestie, sapien vitae commodo sollicitudin, nibh nisi gravida eros, mollis porta massa velit sed purus. Nulla in nibh ut dui rutrum cursus. Donec viverra sed nibh vel mollis. Vivamus varius luctus metus, vel ultricies augue. Ut sit amet eros tempus, sagittis nibh vitae, commodo tortor. Donec sollicitudin mi in porttitor venenatis. Curabitur at massa at elit efficitur pulvinar. Etiam accumsan augue non nunc convallis commodo. Nam aliquet consequat blandit. Sed et quam ut felis efficitur gravida. Maecenas scelerisque quis nisi et ultrices. Nullam blandit sit amet purus iaculis luctus. Donec quis velit consectetur, pulvinar orci at, tincidunt odio.',
+                          TextWidget(
+                            widget.description,
                             size: 17.5,
                             align: TextAlign.justify,
                           ),
@@ -93,8 +102,8 @@ class _Result extends State<Result> {
                             size: 20,
                             weight: FontWeight.bold,
                           ),
-                          const TextWidget(
-                            'Fusce ac diam justo. Donec nec magna nunc. Suspendisse vulputate erat eu magna mattis efficitur. Aenean odio orci, feugiat quis gravida non, rutrum sit amet tortor. Praesent eu ullamcorper libero, nec cursus leo. Donec quis neque pretium, convallis mi sed, mollis mauris. Duis sit amet neque nec mauris imperdiet consectetur in quis massa. Aenean nec placerat justo, quis pretium turpis. Pellentesque nec sem id leo mattis convallis. Curabitur ac volutpat neque, a tincidunt libero. Nunc eleifend felis et enim scelerisque hendrerit. Donec gravida metus non nisi pellentesque pharetra. Duis vel pulvinar erat. Integer consequat diam sit amet diam porttitor posuere. Sed sit amet tortor quis quam vestibulum scelerisque quis eget magna.',
+                          TextWidget(
+                            widget.solution,
                             size: 17.5,
                             align: TextAlign.justify,
                           ),
@@ -105,15 +114,15 @@ class _Result extends State<Result> {
                             weight: FontWeight.bold,
                           ),
                           SizedBox(
-                            height: 210,
+                            height: 300,
                             child: ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) =>
                                   RekomendasiProdukItem(
-                                      _rekomendasiProduk[index]),
+                                      widget.rekomendasiProduk[index]),
                               separatorBuilder: (context, index) =>
                                   const SizedBox(width: 5),
-                              itemCount: _rekomendasiProduk.length,
+                              itemCount: widget.rekomendasiProduk.length,
                             ),
                           ),
                         ],

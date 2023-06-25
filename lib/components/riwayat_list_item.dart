@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '/components/text_widget.dart';
 
 class RiwayatListItem extends StatelessWidget {
-  final Map<String, String> data;
+  final Map<String, dynamic> data;
 
   const RiwayatListItem({super.key, required this.data});
 
