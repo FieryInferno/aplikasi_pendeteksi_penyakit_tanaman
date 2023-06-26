@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import './preview_widget.dart';
 import './result.dart';
 import '../helpers.dart';
 import '../data/blogs.dart';
@@ -78,7 +80,28 @@ class Home extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Helpers.showModalImage(context);
+              Helpers.showModalImage(
+                context,
+                onTap: () async {
+                  XFile pickedFile = await Helpers().getImage() as XFile;
+
+                  // ignore: use_build_context_synchronously
+                  Helpers.redirectPage(
+                    context,
+                    PreviewWidget(File(pickedFile.path)),
+                  );
+                },
+                onTapGallery: () async {
+                  XFile pickedFile =
+                      await Helpers().getImage(gallery: true) as XFile;
+
+                  // ignore: use_build_context_synchronously
+                  Helpers.redirectPage(
+                    context,
+                    PreviewWidget(File(pickedFile.path)),
+                  );
+                },
+              );
             },
             child: Card(
               color: const Color(0xFFCCDDD3),

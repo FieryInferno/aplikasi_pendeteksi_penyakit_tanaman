@@ -23,7 +23,7 @@ class Helpers {
     );
   }
 
-  static Future<dynamic> showModalImage(context) {
+  static Future<dynamic> showModalImage(context, {onTap, onTapGallery}) {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -35,15 +35,7 @@ class Helpers {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: () async {
-                      XFile pickedFile = await Helpers().getImage() as XFile;
-
-                      // ignore: use_build_context_synchronously
-                      Helpers.redirectPage(
-                        context,
-                        PreviewWidget(File(pickedFile.path)),
-                      );
-                    },
+                    onTap: onTap,
                     child: Row(
                       children: const [
                         Icon(Icons.photo_camera),
@@ -55,16 +47,7 @@ class Helpers {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () async {
-                      XFile pickedFile =
-                          await Helpers().getImage(gallery: true) as XFile;
-
-                      // ignore: use_build_context_synchronously
-                      Helpers.redirectPage(
-                        context,
-                        PreviewWidget(File(pickedFile.path)),
-                      );
-                    },
+                    onTap: onTapGallery,
                     child: Row(
                       children: const [
                         Icon(Icons.image),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/alert_widget.dart';
@@ -93,11 +94,32 @@ class _EditProfile extends State<EditProfile> {
                       builder: (context, value, child) => Column(
                         children: [
                           FotoProfileWidget(
-                            type: fotoProfile != null ? 'file' : 'network',
+                            type: fotoProfile != null
+                                ? 'file'
+                                : value.user?['image'] != null
+                                    ? 'network'
+                                    : 'asset',
                             file: fotoProfile,
                             url: value.user?['image'],
+                            asset: './assets/images/user.png',
                             onTap: () {
-                              Helpers.showModalImage(context);
+                              Helpers.showModalImage(
+                                context,
+                                onTap: () async {
+                                  XFile pickedFile =
+                                      await Helpers().getImage() as XFile;
+
+                                  setState(() =>
+                                      fotoProfile = File(pickedFile.path));
+                                },
+                                onTapGallery: () async {
+                                  XFile pickedFile =
+                                      await Helpers().getImage() as XFile;
+
+                                  setState(() =>
+                                      fotoProfile = File(pickedFile.path));
+                                },
+                              );
                             },
                           ),
                           InputWidget(

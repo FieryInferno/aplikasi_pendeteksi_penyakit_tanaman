@@ -50,8 +50,10 @@ class Profile extends StatelessWidget {
                   builder: (context, value, child) => Column(
                     children: [
                       FotoProfileWidget(
-                        type: 'network',
+                        type:
+                            value.user?['image'] != null ? 'network' : 'asset',
                         url: value.user?['image'],
+                        asset: './assets/images/user.png',
                       ),
                       InputWidget(
                         label: 'Nama',
