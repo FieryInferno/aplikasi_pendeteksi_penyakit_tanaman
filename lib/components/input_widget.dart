@@ -16,11 +16,8 @@ class InputWidget extends StatelessWidget {
     this.validator,
     this.errorText,
     this.disabled,
-    value,
     TextEditingController? controller,
-  }) : _controller = controller ?? TextEditingController() {
-    if (value != null) _controller.text = value;
-  }
+  }) : _controller = controller ?? TextEditingController();
 
   @override
   Widget build(BuildContext context) {

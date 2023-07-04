@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/text_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,11 @@ import '../../components/foto_profile_widget.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
+
+  Future<Map<String, dynamic>> getUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return jsonDecode(preferences.getString('user')!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,19 +50,37 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                 ),
-                const FotoProfileWidget(
-                  type: 'asset',
-                  asset: './assets/images/user.png',
-                ),
-                InputWidget(
-                  label: 'Nama',
-                  // value: value.user?['name'],
-                  disabled: true,
-                ),
-                InputWidget(
-                  label: 'Nomor Telepon',
-                  // value: value.user?['phone_number'],
-                  disabled: true,
+                FutureBuilder<Map<String, dynamic>>(
+                  future: getUser(),
+                  builder: (
+                    BuildContext context,
+                    AsyncSnapshot<Map<String, dynamic>> snapshot,
+                  ) {
+                    final data = snapshot.data;
+                    final nameController = TextEditingController();
+                    final phoneController = TextEditingController();
+
+                    nameController.text = data!['name'];
+                    phoneController.text = data['phone_number'];
+
+                    return Column(children: [
+                      FotoProfileWidget(
+                        type: data!['image'] != null ? 'network' : 'asset',
+                        asset: './assets/images/user.png',
+                        url: data['image'],
+                      ),
+                      InputWidget(
+                        label: 'Nama',
+                        disabled: true,
+                        controller: nameController,
+                      ),
+                      InputWidget(
+                        label: 'Nomor Telepon',
+                        disabled: true,
+                        controller: phoneController,
+                      ),
+                    ]);
+                  },
                 ),
               ],
             ),
