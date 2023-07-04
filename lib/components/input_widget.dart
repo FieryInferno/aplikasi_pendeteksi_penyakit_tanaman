@@ -4,7 +4,6 @@ import 'text_widget.dart';
 class InputWidget extends StatelessWidget {
   final String label;
   final bool? password;
-  final Function(String)? onChanged;
   final String? Function(String?)? validator;
   final TextEditingController _controller;
   final bool? disabled;
@@ -14,7 +13,6 @@ class InputWidget extends StatelessWidget {
     super.key,
     required this.label,
     this.password,
-    this.onChanged,
     this.validator,
     this.errorText,
     this.disabled,
@@ -55,7 +53,6 @@ class InputWidget extends StatelessWidget {
               ),
               errorText: errorText,
             ),
-            onChanged: onChanged,
             validator: validator,
             enabled: disabled != null ? !disabled! : true,
             controller: _controller,

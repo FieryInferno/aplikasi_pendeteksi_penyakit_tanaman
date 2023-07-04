@@ -1,10 +1,8 @@
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/text_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_view.dart';
-import '../../model/user_model.dart';
 import '../../pages/profile/edit_profile.dart';
 import '../../components/page_wrap.dart';
 import '../../components/input_widget.dart';
@@ -46,28 +44,20 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Consumer<UserModel>(
-                  builder: (context, value, child) => Column(
-                    children: [
-                      FotoProfileWidget(
-                        type:
-                            value.user?['image'] != null ? 'network' : 'asset',
-                        url: value.user?['image'],
-                        asset: './assets/images/user.png',
-                      ),
-                      InputWidget(
-                        label: 'Nama',
-                        value: value.user?['name'],
-                        disabled: true,
-                      ),
-                      InputWidget(
-                        label: 'Nomor Telepon',
-                        value: value.user?['phone_number'],
-                        disabled: true,
-                      ),
-                    ],
-                  ),
-                )
+                const FotoProfileWidget(
+                  type: 'asset',
+                  asset: './assets/images/user.png',
+                ),
+                InputWidget(
+                  label: 'Nama',
+                  // value: value.user?['name'],
+                  disabled: true,
+                ),
+                InputWidget(
+                  label: 'Nomor Telepon',
+                  // value: value.user?['phone_number'],
+                  disabled: true,
+                ),
               ],
             ),
           ),

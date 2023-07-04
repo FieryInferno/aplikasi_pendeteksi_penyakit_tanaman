@@ -8,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../home.dart';
 import '../../constants.dart';
-
 import '../../model/menu_model.dart';
-import '../../model/user_model.dart';
 import '../../helpers.dart';
 import '../../components/input_widget.dart';
 import '../../components/primary_button.dart';
@@ -100,12 +98,13 @@ class _Login extends State<Login> {
                         final bodyAuthUser = jsonDecode(responseAuthUser.body);
 
                         await preferences.setString('token', bearerToken);
+                        await preferences.setString(
+                          'user',
+                          jsonEncode(bodyAuthUser['data']),
+                        );
                         // ignore: use_build_context_synchronously
                         Provider.of<MenuModel>(context, listen: false)
                             .setMenu('home');
-                        // ignore: use_build_context_synchronously
-                        Provider.of<UserModel>(context, listen: false).user =
-                            bodyAuthUser['data'];
                         // ignore: use_build_context_synchronously
                         Helpers.redirectPage(context, Home());
                       } else {

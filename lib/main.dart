@@ -4,14 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/home.dart';
 import '../model/menu_model.dart';
-import '../model/user_model.dart';
 
 void main() => runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => MenuModel()),
-          ChangeNotifierProvider(create: (context) => UserModel()),
-        ],
+      ChangeNotifierProvider(
+        create: (context) => MenuModel(),
         child: const MyApp(),
       ),
     );
