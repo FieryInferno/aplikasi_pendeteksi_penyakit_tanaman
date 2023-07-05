@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +31,10 @@ class _EditProfile extends State<EditProfile> {
   late bool _isLoading = false;
   File? fotoProfile;
   String? errorPhoneNumber;
-  String? cobaString;
+  String? urlImage;
 
   void _submitForm(BuildContext context) async {
+    debugger();
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
@@ -44,6 +46,7 @@ class _EditProfile extends State<EditProfile> {
 
       formData.headers['Authorization'] =
           'Bearer ${preferences.getString('token')}';
+
       formData.fields.addAll({
         'name': _namaController.text.trim(),
         'phone_number': _phoneNumberController.text.trim(),
@@ -62,6 +65,7 @@ class _EditProfile extends State<EditProfile> {
       if (response.statusCode == 200) {
         // ignore: use_build_context_synchronously
         Helpers.redirectPage(context, const Profile());
+        preferences.setString('user', jsonEncode(body['data']));
         Future.delayed(
           const Duration(milliseconds: 150),
           () => showCustomAlert(
@@ -82,10 +86,7 @@ class _EditProfile extends State<EditProfile> {
         onTap: () async {
           XFile pickedFile = await Helpers().getImage() as XFile;
 
-          // setState(() => fotoProfile = File(pickedFile.path));
-          setState(() {
-            cobaString = '';
-          });
+          setState(() => fotoProfile = File(pickedFile.path));
         },
         onTapGallery: () async {
           XFile pickedFile = await Helpers().getImage() as XFile;
@@ -93,6 +94,20 @@ class _EditProfile extends State<EditProfile> {
           // setState(() => fotoProfile = File(pickedFile.path));
         },
       );
+
+  Future<void> fetchData() async {
+    final user = await Helpers.getUser();
+    _namaController.text = user['name'];
+    _phoneNumberController.text = user['phone_number'];
+
+    setState(() => urlImage = user['image']);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
 
   @override
   void dispose() {
@@ -114,9 +129,14 @@ class _EditProfile extends State<EditProfile> {
                 child: Column(
                   children: [
                     FotoProfileWidget(
-                      type: fotoProfile != null ? 'file' : 'asset',
+                      type: fotoProfile != null
+                          ? 'file'
+                          : urlImage != null
+                              ? 'network'
+                              : 'asset',
                       file: fotoProfile,
                       asset: './assets/images/user.png',
+                      url: urlImage,
                       onTap: _changePhotoProfile,
                     ),
                     InputWidget(

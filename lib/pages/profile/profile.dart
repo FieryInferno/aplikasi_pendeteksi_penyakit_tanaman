@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/components/text_widget.dart';
 import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_view.dart';
 import '../../pages/profile/edit_profile.dart';
+import '../../data/user_controller.dart';
 import '../../components/page_wrap.dart';
 import '../../components/input_widget.dart';
 import '../../components/primary_button.dart';
@@ -13,11 +13,6 @@ import '../../components/foto_profile_widget.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
-
-  Future<Map<String, dynamic>> getUser() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return jsonDecode(preferences.getString('user')!);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,35 +46,39 @@ class Profile extends StatelessWidget {
                   ),
                 ),
                 FutureBuilder<Map<String, dynamic>>(
-                  future: getUser(),
+                  future: Helpers.getUser(),
                   builder: (
                     BuildContext context,
                     AsyncSnapshot<Map<String, dynamic>> snapshot,
                   ) {
-                    final data = snapshot.data;
-                    final nameController = TextEditingController();
-                    final phoneController = TextEditingController();
+                    if (snapshot.hasData) {
+                      final data = snapshot.data;
 
-                    nameController.text = data!['name'];
-                    phoneController.text = data['phone_number'];
+                      UserController user = UserController(
+                        name: data!['name'],
+                        phone: data['phone_number'],
+                      );
 
-                    return Column(children: [
-                      FotoProfileWidget(
-                        type: data!['image'] != null ? 'network' : 'asset',
-                        asset: './assets/images/user.png',
-                        url: data['image'],
-                      ),
-                      InputWidget(
-                        label: 'Nama',
-                        disabled: true,
-                        controller: nameController,
-                      ),
-                      InputWidget(
-                        label: 'Nomor Telepon',
-                        disabled: true,
-                        controller: phoneController,
-                      ),
-                    ]);
+                      return Column(children: [
+                        FotoProfileWidget(
+                          type: data['image'] != null ? 'network' : 'asset',
+                          asset: './assets/images/user.png',
+                          url: data['image'],
+                        ),
+                        InputWidget(
+                          label: 'Nama',
+                          disabled: true,
+                          controller: user.name,
+                        ),
+                        InputWidget(
+                          label: 'Nomor Telepon',
+                          disabled: true,
+                          controller: user.phone,
+                        ),
+                      ]);
+                    }
+
+                    return const SizedBox();
                   },
                 ),
               ],
