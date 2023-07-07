@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'constants.dart';
 
 class Helpers {
   final picker = ImagePicker();
@@ -67,6 +70,12 @@ class Helpers {
 
   static Future<Map<String, dynamic>> getUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return jsonDecode(preferences.getString('user')!);
+
+    final responseAuthUser = await http.get(
+      Constants.url['getAuth']!,
+      headers: {'Authorization': 'Bearer ${preferences.getString('token')}'},
+    );
+
+    return jsonDecode(responseAuthUser.body);
   }
 }

@@ -52,7 +52,7 @@ class Profile extends StatelessWidget {
                     AsyncSnapshot<Map<String, dynamic>> snapshot,
                   ) {
                     if (snapshot.hasData) {
-                      final data = snapshot.data;
+                      final data = snapshot.data!['data'];
 
                       UserController user = UserController(
                         name: data!['name'],

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -178,19 +179,47 @@ class Home extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           const TitleWidget(title: 'Blog'),
-          Expanded(
-            child: ListView.separated(
-              itemBuilder: (context, index) => ClickWidget(
-                destination: BlogDetail(_blogs[index]),
-                child: BlogItem(
-                  key: Key('BlogItem$index'),
-                  blog: _blogs[index],
-                  index: index,
+          FutureBuilder<Map<String, dynamic>>(
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<Map<String, dynamic>> snapshot,
+            ) {
+              if (snapshot.hasData) {
+                return Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) => ClickWidget(
+                      destination: BlogDetail(_blogs[index]),
+                      child: BlogItem(
+                        key: Key('BlogItem$index'),
+                        blog: _blogs[index],
+                        index: index,
+                      ),
+                    ),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 5),
+                    itemCount: _blogs.length,
+                  ),
+                );
+              }
+              return Center(
+                child: SizedBox(
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: Column(
+                      children: const [
+                        CupertinoActivityIndicator(
+                          color: Color(0xFF116531),
+                          radius: 40,
+                        ),
+                        SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              separatorBuilder: (context, index) => const SizedBox(height: 5),
-              itemCount: _blogs.length,
-            ),
+              );
+            },
           ),
         ],
       ),

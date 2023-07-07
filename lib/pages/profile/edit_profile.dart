@@ -96,7 +96,9 @@ class _EditProfile extends State<EditProfile> {
       );
 
   Future<void> fetchData() async {
-    final user = await Helpers.getUser();
+    final data = await Helpers.getUser();
+    final user = data['data'];
+
     _namaController.text = user['name'];
     _phoneNumberController.text = user['phone_number'];
 
@@ -141,14 +143,12 @@ class _EditProfile extends State<EditProfile> {
                     ),
                     InputWidget(
                       label: 'Nama',
-                      // value: value.user?['name'],
                       controller: _namaController,
                       validator: (value) =>
                           value!.isEmpty ? 'Nama tidak boleh kosong' : null,
                     ),
                     InputWidget(
                       label: 'Nomor Telepon',
-                      // value: value.user?['phone_number'],
                       controller: _phoneNumberController,
                       validator: (value) => value!.isEmpty
                           ? 'Nomor telepon tidak boleh kosong'

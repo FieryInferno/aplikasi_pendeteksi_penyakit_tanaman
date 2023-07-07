@@ -91,17 +91,9 @@ class _Login extends State<Login> {
                         final SharedPreferences preferences =
                             await SharedPreferences.getInstance();
                         final bearerToken = body['data']['token'];
-                        final responseAuthUser = await http.get(
-                          Constants.url['getAuth']!,
-                          headers: {'Authorization': 'Bearer $bearerToken'},
-                        );
-                        final bodyAuthUser = jsonDecode(responseAuthUser.body);
 
                         await preferences.setString('token', bearerToken);
-                        await preferences.setString(
-                          'user',
-                          jsonEncode(bodyAuthUser['data']),
-                        );
+
                         // ignore: use_build_context_synchronously
                         Provider.of<MenuModel>(context, listen: false)
                             .setMenu('home');
