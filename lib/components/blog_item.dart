@@ -1,6 +1,7 @@
+import 'package:aplikasi_pendeteksi_penyakit_tanaman/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '/components/text_widget.dart';
+import '../components/text_widget.dart';
 
 class BlogItem extends StatefulWidget {
   final Map<String, dynamic> blog;
@@ -103,9 +104,13 @@ class _BlogItemState extends State<BlogItem> with TickerProviderStateMixin {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text('${widget.blog['date']}')),
                                 Flexible(
-                                  child: Text('${widget.blog['author']}'),
+                                  child: Text(
+                                    convertDate(widget.blog['timestamp']),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Text(widget.blog['user']['name']),
                                 ),
                               ],
                             ),

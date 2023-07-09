@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/back_button.dart';
 import '../components/title_widget.dart';
 import '../components/text_widget.dart';
+import '../helpers.dart';
 
 class BlogDetail extends StatefulWidget {
   final Map<String, dynamic> blogData;
@@ -62,10 +63,12 @@ class _BlogDetail extends State<BlogDetail> {
                             children: [
                               const Icon(Icons.schedule),
                               const SizedBox(width: 5),
-                              TextWidget(widget.blogData['timestamp']!),
+                              TextWidget(
+                                convertDate(widget.blogData['timestamp']!),
+                              ),
                               const SizedBox(width: 5),
                               const Icon(Icons.person),
-                              TextWidget(widget.blogData['timestamp']!),
+                              TextWidget(widget.blogData['user']['name']!),
                             ],
                           ),
                           const SizedBox(height: 10),

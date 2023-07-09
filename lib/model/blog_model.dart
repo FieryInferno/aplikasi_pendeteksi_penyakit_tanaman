@@ -5,9 +5,11 @@ import '../constants.dart';
 
 class BlogModel extends ChangeNotifier {
   final List<dynamic> _blogs = [];
+  bool _isLoading = false;
 
   BlogModel() {
     if (_blogs.isEmpty) {
+      _isLoading = true;
       fetchData();
     }
   }
@@ -25,8 +27,10 @@ class BlogModel extends ChangeNotifier {
 
       _blogs.addAll(result['result']);
     }
+    _isLoading = false;
     notifyListeners();
   }
 
   List<dynamic> get blogs => _blogs;
+  bool get isLoading => _isLoading;
 }
