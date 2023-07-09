@@ -1,22 +1,18 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './preview_widget.dart';
 import './result.dart';
-import './blog_detail.dart';
 import '../helpers.dart';
 import '../pages/riwayat_list.dart';
-import '../model/blog_model.dart';
 import '../data/riwayat.dart';
 import '../components/title_widget.dart';
 import '../components/text_widget.dart';
 import '../components/click_widget.dart';
 import '../components/page_wrap.dart';
 import '../components/riwayat_item.dart';
-import '../components/blog_item.dart';
+import '../components/blog_home.dart';
 
 class Home extends StatelessWidget {
   final List<Map<String, dynamic>> _list = Riwayat().list;
@@ -178,33 +174,7 @@ class Home extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          const TitleWidget(title: 'Blog'),
-          Consumer<BlogModel>(builder: (context, blogModel, child) {
-            List<dynamic> blog = blogModel.blogs;
-
-            return blogModel.isLoading
-                ? const Center(
-                    child: CupertinoActivityIndicator(
-                      color: Color(0xFF116531),
-                      radius: 40,
-                    ),
-                  )
-                : Expanded(
-                    child: ListView.separated(
-                      itemBuilder: (context, index) => ClickWidget(
-                        destination: BlogDetail(blog[index]),
-                        child: BlogItem(
-                          key: Key('BlogItem$index'),
-                          blog: blog[index],
-                          index: index,
-                        ),
-                      ),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 5),
-                      itemCount: blog.length,
-                    ),
-                  );
-          }),
+          const BlogHome(),
         ],
       ),
     );
