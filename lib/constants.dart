@@ -5,5 +5,6 @@ class Constants {
     'getAuth': Uri.https(baseUrl, '/api/v1/auth/user/'),
     'editProfile': Uri.https(baseUrl, '/api/v1/auth/edit-profile/'),
     'detectDisease': Uri.https(baseUrl, '/api/v1/disease/'),
+    'blogs': Uri.https(baseUrl, '/api/v1/blog'),
   };
 }

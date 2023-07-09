@@ -1,24 +1,23 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './preview_widget.dart';
 import './result.dart';
+import './blog_detail.dart';
 import '../helpers.dart';
-import '../data/blogs.dart';
-import '../data/riwayat.dart';
 import '../pages/riwayat_list.dart';
-import '../pages/blog_detail.dart';
+import '../model/blog_model.dart';
+import '../data/riwayat.dart';
 import '../components/title_widget.dart';
-import '../components/blog_item.dart';
 import '../components/text_widget.dart';
 import '../components/click_widget.dart';
 import '../components/page_wrap.dart';
 import '../components/riwayat_item.dart';
+import '../components/blog_item.dart';
 
 class Home extends StatelessWidget {
-  final List<Map<String, String>> _blogs = Blogs().list;
   final List<Map<String, dynamic>> _list = Riwayat().list;
   final picker = ImagePicker();
 
@@ -179,48 +178,66 @@ class Home extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           const TitleWidget(title: 'Blog'),
-          FutureBuilder<Map<String, dynamic>>(
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<Map<String, dynamic>> snapshot,
-            ) {
-              if (snapshot.hasData) {
-                return Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (context, index) => ClickWidget(
-                      destination: BlogDetail(_blogs[index]),
-                      child: BlogItem(
-                        key: Key('BlogItem$index'),
-                        blog: _blogs[index],
-                        index: index,
-                      ),
-                    ),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 5),
-                    itemCount: _blogs.length,
-                  ),
-                );
-              }
-              return Center(
-                child: SizedBox(
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                    child: Column(
-                      children: const [
-                        CupertinoActivityIndicator(
-                          color: Color(0xFF116531),
-                          radius: 40,
-                        ),
-                        SizedBox(height: 15),
-                      ],
-                    ),
+          // FutureBuilder<Map<String, dynamic>>(
+          //   builder: (
+          //     BuildContext context,
+          //     AsyncSnapshot<Map<String, dynamic>> snapshot,
+          //   ) {
+          //     if (snapshot.hasData) {
+          //       return Expanded(
+          //         child: ListView.separated(
+          //           itemBuilder: (context, index) => ClickWidget(
+          //             destination: BlogDetail(_blogs[index]),
+          //             child: BlogItem(
+          //               key: Key('BlogItem$index'),
+          //               blog: _blogs[index],
+          //               index: index,
+          //             ),
+          //           ),
+          //           separatorBuilder: (context, index) =>
+          //               const SizedBox(height: 5),
+          //           itemCount: _blogs.length,
+          //         ),
+          //       );
+          //     }
+          //     return Center(
+          //       child: SizedBox(
+          //         child: Container(
+          //           padding: const EdgeInsets.all(20),
+          //           decoration:
+          //               BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          //           child: Column(
+          //             children: const [
+          //               CupertinoActivityIndicator(
+          //                 color: Color(0xFF116531),
+          //                 radius: 40,
+          //               ),
+          //               SizedBox(height: 15),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
+          Consumer<BlogModel>(builder: (context, blogModel, child) {
+            List<dynamic> blog = blogModel.blogs;
+
+            return Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) => ClickWidget(
+                  destination: BlogDetail(blog[index]),
+                  child: BlogItem(
+                    key: Key('BlogItem$index'),
+                    blog: blog[index],
+                    index: index,
                   ),
                 ),
-              );
-            },
-          ),
+                separatorBuilder: (context, index) => const SizedBox(height: 5),
+                itemCount: blog.length,
+              ),
+            );
+          }),
         ],
       ),
     );

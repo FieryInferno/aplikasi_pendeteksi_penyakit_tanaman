@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '/components/back_button.dart';
-import '/components/title_widget.dart';
-import '/components/text_widget.dart';
+import '../components/back_button.dart';
+import '../components/title_widget.dart';
+import '../components/text_widget.dart';
 
 class BlogDetail extends StatefulWidget {
-  final Map<String, String> blogData;
+  final Map<String, dynamic> blogData;
 
   const BlogDetail(this.blogData, {super.key});
 
@@ -29,8 +29,7 @@ class _BlogDetail extends State<BlogDetail> {
               top: 0,
               right: 0,
               left: 0,
-              child: Image.asset('assets/images/${widget.blogData['image']}',
-                  fit: BoxFit.cover),
+              child: Image.network(widget.blogData['image'], fit: BoxFit.cover),
             ),
             const Positioned(top: 10, left: 10, child: BackButtonWidget()),
             AnimatedPositioned(
@@ -63,10 +62,10 @@ class _BlogDetail extends State<BlogDetail> {
                             children: [
                               const Icon(Icons.schedule),
                               const SizedBox(width: 5),
-                              TextWidget(widget.blogData['date']!),
+                              TextWidget(widget.blogData['timestamp']!),
                               const SizedBox(width: 5),
                               const Icon(Icons.person),
-                              TextWidget(widget.blogData['author']!),
+                              TextWidget(widget.blogData['timestamp']!),
                             ],
                           ),
                           const SizedBox(height: 10),

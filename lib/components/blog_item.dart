@@ -3,7 +3,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '/components/text_widget.dart';
 
 class BlogItem extends StatefulWidget {
-  final Map<String, String> blog;
+  final Map<String, dynamic> blog;
   final int index;
 
   const BlogItem({Key? key, required this.blog, required this.index})
@@ -80,8 +80,8 @@ class _BlogItemState extends State<BlogItem> with TickerProviderStateMixin {
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(10)),
-                          child: Image.asset(
-                            'assets/images/${widget.blog['image']}',
+                          child: Image.network(
+                            widget.blog['image'],
                             height: 110,
                             width: 110,
                             fit: BoxFit.cover,
