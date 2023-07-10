@@ -72,12 +72,55 @@ class _BlogDetail extends State<BlogDetail> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          const TextWidget(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum pulvinar aliquet. Mauris molestie, sapien vitae commodo sollicitudin, nibh nisi gravida eros, mollis porta massa velit sed purus. Nulla in nibh ut dui rutrum cursus. Donec viverra sed nibh vel mollis. Vivamus varius luctus metus, vel ultricies augue. Ut sit amet eros tempus, sagittis nibh vitae, commodo tortor. Donec sollicitudin mi in porttitor venenatis. Curabitur at massa at elit efficitur pulvinar. Etiam accumsan augue non nunc convallis commodo. Nam aliquet consequat blandit. Sed et quam ut felis efficitur gravida. Maecenas scelerisque quis nisi et ultrices. Nullam blandit sit amet purus iaculis luctus. Donec quis velit consectetur, pulvinar orci at, tincidunt odio.',
+                          TextWidget(
+                            widget.blogData['description'],
                             size: 17.5,
                             align: TextAlign.justify,
                           ),
                           const SizedBox(height: 10),
+                          const TitleWidget(title: 'Komentar'),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipOval(
+                                child: Image.asset(
+                                  'assets/images/user.png',
+                                  scale: 2,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const TextWidget(
+                                          'John Doe',
+                                          weight: FontWeight.bold,
+                                          size: 18,
+                                        ),
+                                        Row(
+                                          children: const [
+                                            Icon(Icons.schedule),
+                                            Text('4 Mei 2023 09:00'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const TextWidget(
+                                      'Lorem ipsum dolor sit amet, consecetur adispicing elit,Lorem ipsum dolor sit amet, consecetur adispicing elit,Lorem ipsum dolor sit amet, consecetur adispicing elit,Lorem ipsum dolor sit amet, consecetur adispicing elit,',
+                                      align: TextAlign.justify,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
