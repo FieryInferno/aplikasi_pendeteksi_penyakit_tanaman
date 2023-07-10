@@ -35,7 +35,7 @@ class Menu extends StatelessWidget {
             destination: Home(),
             icon: Icons.home,
           ),
-          MenuButton(
+          const MenuButton(
             menu: 'blog',
             destination: BlogList(),
             icon: Icons.description,

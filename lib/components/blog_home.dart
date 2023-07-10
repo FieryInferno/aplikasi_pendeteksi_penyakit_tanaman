@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import './title_widget.dart';
 import '../model/blog_model.dart';
-import '../pages/blog_detail.dart';
-import 'blog_item.dart';
-import 'click_widget.dart';
-import 'title_widget.dart';
+import '../components/blog_list_view.dart';
 
 class BlogHome extends StatefulWidget {
   const BlogHome({super.key});
@@ -40,39 +38,9 @@ class _BlogHome extends State<BlogHome> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children: [
-          const TitleWidget(title: 'Blog'),
-          Consumer<BlogModel>(builder: (context, blogModel, child) {
-            List<dynamic> blog = blogModel.blogs;
-
-            return blogModel.isLoading
-                ? const Center(
-                    child: CupertinoActivityIndicator(
-                      color: Color(0xFF116531),
-                      radius: 40,
-                    ),
-                  )
-                : Expanded(
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return blog[index] is bool
-                            ? const Text('Load more...')
-                            : ClickWidget(
-                                destination: BlogDetail(blog[index]),
-                                child: BlogItem(
-                                  key: Key('BlogItem$index'),
-                                  blog: blog[index],
-                                  index: index,
-                                ),
-                              );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 5),
-                      itemCount: blog.length,
-                      controller: _scrollController,
-                    ),
-                  );
-          }),
+        children: const [
+          TitleWidget(title: 'Blog'),
+          Expanded(child: BlogListView()),
         ],
       ),
     );
