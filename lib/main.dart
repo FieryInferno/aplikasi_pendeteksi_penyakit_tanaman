@@ -5,12 +5,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/home.dart';
 import '../model/menu_model.dart';
 import '../model/blog_model.dart';
+import '../model/comment_model.dart';
 
 void main() => runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => MenuModel()),
           ChangeNotifierProvider(create: (context) => BlogModel()),
+          ChangeNotifierProvider(
+            create: (context) => CommentModel(),
+          )
         ],
         child: const MyApp(),
       ),

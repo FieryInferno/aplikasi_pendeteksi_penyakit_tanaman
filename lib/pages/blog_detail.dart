@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../helpers.dart';
+import '../model/comment_model.dart';
 import '../components/back_button.dart';
 import '../components/title_widget.dart';
 import '../components/text_widget.dart';
-import '../helpers.dart';
+import '../components/mini_loading.dart';
 
 class BlogDetail extends StatefulWidget {
   final Map<String, dynamic> blogData;
@@ -79,48 +82,73 @@ class _BlogDetail extends State<BlogDetail> {
                           ),
                           const SizedBox(height: 10),
                           const TitleWidget(title: 'Komentar'),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipOval(
-                                child: Image.asset(
-                                  'assets/images/user.png',
-                                  scale: 2,
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                          Consumer<CommentModel>(
+                              builder: (context, commentModel, child) {
+                            int id = widget.blogData['id'];
+
+                            if (commentModel.comments[id] == null) {
+                              commentModel.getComment(id);
+                              return const MiniLoading();
+                            }
+
+                            List<Widget> listCommentWidget = [];
+
+                            for (var i = 0;
+                                i < commentModel.comments[id]!.length;
+                                i++) {
+                              final comment = commentModel.comments[id]![i];
+                              final user = comment['user'];
+
+                              listCommentWidget.add(Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipOval(
+                                    child: Image.network(
+                                      user['image'],
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
                                       children: [
-                                        const TextWidget(
-                                          'John Doe',
-                                          weight: FontWeight.bold,
-                                          size: 18,
-                                        ),
                                         Row(
-                                          children: const [
-                                            Icon(Icons.schedule),
-                                            Text('4 Mei 2023 09:00'),
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            TextWidget(
+                                              user['name'],
+                                              weight: FontWeight.bold,
+                                              size: 18,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Icon(Icons.schedule),
+                                                Text(convertDate(
+                                                    comment['timestamp'])),
+                                              ],
+                                            ),
                                           ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextWidget(
+                                          comment['message'],
+                                          align: TextAlign.justify,
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    const TextWidget(
-                                      'Lorem ipsum dolor sit amet, consecetur adispicing elit,Lorem ipsum dolor sit amet, consecetur adispicing elit,Lorem ipsum dolor sit amet, consecetur adispicing elit,Lorem ipsum dolor sit amet, consecetur adispicing elit,',
-                                      align: TextAlign.justify,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                                  ),
+                                ],
+                              ));
+                            }
+
+                            return Column(
+                              children: listCommentWidget,
+                            );
+                          })
                         ],
                       ),
                     ),

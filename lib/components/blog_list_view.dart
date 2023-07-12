@@ -4,6 +4,7 @@ import './click_widget.dart';
 import './blog_item.dart';
 import '../model/blog_model.dart';
 import '../pages/blog_detail.dart';
+import './mini_loading.dart';
 
 class BlogListView extends StatefulWidget {
   const BlogListView({super.key});
@@ -39,12 +40,7 @@ class _BlogListView extends State<BlogListView> {
       List<dynamic> blog = blogModel.blogs;
 
       return blogModel.isLoading
-          ? const Center(
-              child: CupertinoActivityIndicator(
-                color: Color(0xFF116531),
-                radius: 40,
-              ),
-            )
+          ? const MiniLoading()
           : ListView.separated(
               itemBuilder: (context, index) {
                 return blog[index] is bool

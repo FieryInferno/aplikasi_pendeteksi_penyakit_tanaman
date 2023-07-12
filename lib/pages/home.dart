@@ -12,7 +12,7 @@ import '../components/text_widget.dart';
 import '../components/click_widget.dart';
 import '../components/page_wrap.dart';
 import '../components/riwayat_item.dart';
-import '../components/blog_home.dart';
+import '../components/blog_list_view.dart';
 
 class Home extends StatelessWidget {
   final List<Map<String, dynamic>> _list = Riwayat().list;
@@ -174,7 +174,16 @@ class Home extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          const BlogHome(),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                TitleWidget(title: 'Blog'),
+                Expanded(child: BlogListView()),
+              ],
+            ),
+          )
         ],
       ),
     );

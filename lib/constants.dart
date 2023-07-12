@@ -6,5 +6,6 @@ class Constants {
     'editProfile': Uri.https(baseUrl, '/api/v1/auth/edit-profile/'),
     'detectDisease': Uri.https(baseUrl, '/api/v1/disease/'),
     'blogs': Uri.https(baseUrl, '/api/v1/blog'),
+    'comments': Uri.https(baseUrl, '/api/v1/comment'),
   };
 }
